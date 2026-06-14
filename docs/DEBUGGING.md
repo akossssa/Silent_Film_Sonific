@@ -31,13 +31,13 @@ logs/tests/
 
 ## Logger
 
-Use this abstraction in Max patches:
+Use this logger JS inside devtools Max patches:
 
 ```text
 js sfs.debug.logger.js <component_name>
 ```
 
-Use this form inside patches stored in `devtools/max`, where the logger JS lives. Production abstractions should expose diagnostics on an outlet; devtools harnesses can attach the logger when file logging is needed.
+This form works inside patches stored in `devtools/max`, where the logger JS lives. Production abstractions should expose diagnostics on an outlet; devtools harnesses can attach the logger when file logging is needed.
 
 Accepted messages:
 
@@ -90,7 +90,7 @@ For Layer A, the primary outlet remains:
 dictionary sfs_video_features
 ```
 
-The diagnostics outlet reports logger status and any internal warnings/errors.
+The diagnostics outlet reports internal warnings/errors as `log <level> <event> <message>` messages. Devtools patches can connect that outlet to `js sfs.debug.logger.js ...` when file logging is needed.
 
 ## How To Report A Max Issue
 
@@ -103,6 +103,8 @@ The diagnostics outlet reports logger status and any internal warnings/errors.
 logs/max/sfs-debug.jsonl
 logs/snapshots/
 ```
+
+These files are created by devtools logger patches. If they do not exist, export the Max Console instead.
 
 If the error happens before our abstractions load, Max may only print it to the Max Console. In that case, paste the exact console line.
 For most of those cases, use `devtools/max/sfs.debug.console_capture.maxpat` to export the console instead.

@@ -11,6 +11,16 @@ Layer A is considered correct when it satisfies both the interface contract and 
 - `devtools/max/sfs.debug.logger.js` writes diagnostics and latest dictionary snapshots when attached by a devtools patch.
 - `schemas/SFS_VIDEO_FEATURES.schema.json` documents the JSON-compatible schema.
 
+## Devtools Path Alias
+
+The moved devtools test patches use `D:/tmp/sfs_project` as a no-spaces alias to the project root because Max does not reliably resolve relative JS paths from moved folders. If that alias is missing, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\setup_dev_paths.ps1
+```
+
+If Windows reports access denied while creating the junction, rerun the command from an elevated PowerShell.
+
 ## Contract Tests
 
 Open `devtools/max/sfs.video_analysis.basic_motion.test.maxpat`.
@@ -47,12 +57,6 @@ The test patch attempts to write `logs/max/sfs-max-console.txt` automatically af
 Use one source at a time in the test patch. The main test patch intentionally avoids loading a camera object on open, because `jit.grab` can print hardware or driver errors on machines without an available camera.
 
 ## Automated Self-Test
-
-The moved devtools test patches use `D:/tmp/sfs_project` as a no-spaces alias to the project root because Max does not reliably resolve relative JS paths from moved folders. If that alias is missing, run:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File tools\setup_dev_paths.ps1
-```
 
 Open:
 
