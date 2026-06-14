@@ -1,0 +1,16 @@
+# Runtime logs and generated snapshots
+logs/**/*.jsonl
+logs/**/*.json
+logs/**/*.txt
+!logs/**/.gitkeep
+
+# Max and OS local files
+*.maxpat~
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Local editor state
+.vscode/
+.idea/
