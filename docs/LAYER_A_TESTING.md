@@ -6,14 +6,14 @@ Layer A is considered correct when it satisfies both the interface contract and 
 
 - `patchers/sfs.video_analysis.basic_motion.maxpat` is the Layer A abstraction.
 - `patchers/sfs.video_analysis.basic_motion.js` computes the MVP features.
-- `patchers/sfs.video_analysis.basic_motion.test.maxpat` is the manual Max test harness.
-- `patchers/sfs.validate_video_features.js` validates the dictionary contract inside Max.
-- `patchers/sfs.debug.logger.maxpat` writes diagnostics and latest dictionary snapshots.
+- `devtools/max/sfs.video_analysis.basic_motion.test.maxpat` is the manual Max test harness.
+- `devtools/max/sfs.validate_video_features.js` validates the dictionary contract inside Max.
+- `devtools/max/sfs.debug.logger.js` writes diagnostics and latest dictionary snapshots.
 - `schemas/SFS_VIDEO_FEATURES.schema.json` documents the JSON-compatible schema.
 
 ## Contract Tests
 
-Open `patchers/sfs.video_analysis.basic_motion.test.maxpat`.
+Open `devtools/max/sfs.video_analysis.basic_motion.test.maxpat`.
 
 The output from `sfs.video_analysis.basic_motion` is connected to `js sfs.validate_video_features.js`.
 
@@ -23,7 +23,7 @@ Passing output looks like:
 valid 1
 ```
 
-Layer A also writes:
+The devtools test/debug patches can write:
 
 ```text
 logs/max/sfs-debug.jsonl
@@ -40,7 +40,7 @@ The validator checks:
 - `features.motion`, `features.brightness`, `features.contrast`, and `features.cut_strength` are in `0.0-1.0`
 - `features.cut` is boolean
 
-The test patch attempts to write `logs/max/sfs-max-console.txt` automatically after load. If that file does not appear, open `patchers/sfs.debug.console_capture.maxpat` and click its write button. If the Max Console output is unclear, inspect the console export and the latest snapshot file first. The snapshot contains the most recent `SFS_VIDEO_FEATURES` dictionary exactly as written by the patch.
+The test patch attempts to write `logs/max/sfs-max-console.txt` automatically after load. If that file does not appear, open `devtools/max/sfs.debug.console_capture.maxpat` and click its write button. If the Max Console output is unclear, inspect the console export and the latest snapshot file first. The snapshot contains the most recent `SFS_VIDEO_FEATURES` dictionary written by the devtools logger.
 
 ## Behavioral Smoke Tests
 
@@ -48,16 +48,22 @@ Use one source at a time in the test patch. The main test patch intentionally av
 
 ## Automated Self-Test
 
+The moved devtools test patches use `D:/tmp/sfs_project` as a no-spaces alias to the project root because Max does not reliably resolve relative JS paths from moved folders. If that alias is missing, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\setup_dev_paths.ps1
+```
+
 Open:
 
 ```text
-patchers/sfs.video_analysis.basic_motion.selftest.maxpat
+devtools/max/sfs.video_analysis.basic_motion.selftest.maxpat
 ```
 
 For repeat automated launches from Codex or PowerShell while the main self-test patch is already open in Max, open:
 
 ```text
-patchers/sfs.video_analysis.basic_motion.selftest.runner.maxpat
+devtools/max/sfs.video_analysis.basic_motion.selftest.runner.maxpat
 ```
 
 The patch starts automatically on load and writes:
@@ -67,7 +73,7 @@ logs/tests/layer_a_selftest.latest.json
 logs/tests/layer_a_selftest.jsonl
 ```
 
-The self-test runs generated matrices through the real Layer A abstraction. It covers:
+The self-test runs generated matrices through the production Layer A analysis JS used by the abstraction. It covers:
 
 - static black
 - static white

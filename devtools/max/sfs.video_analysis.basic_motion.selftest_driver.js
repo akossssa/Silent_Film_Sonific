@@ -561,8 +561,9 @@ function projectPath(relativePath) {
 
     patcherPath = normalizePath(patcherPath);
 
-    if (patcherPath.indexOf("/patchers/") >= 0) {
-        return patcherPath.substring(0, patcherPath.indexOf("/patchers/")) + "/" + relativePath;
+    var projectRoot = getProjectRoot(patcherPath);
+    if (projectRoot) {
+        return projectRoot + "/" + relativePath;
     }
 
     return relativePath;
@@ -570,6 +571,19 @@ function projectPath(relativePath) {
 
 function normalizePath(value) {
     return String(value).replace(/\\/g, "/");
+}
+
+function getProjectRoot(path) {
+    var markers = ["/patchers/", "/devtools/max/"];
+
+    for (var i = 0; i < markers.length; i += 1) {
+        var index = path.indexOf(markers[i]);
+        if (index >= 0) {
+            return path.substring(0, index);
+        }
+    }
+
+    return "";
 }
 
 function timestamp() {

@@ -83,8 +83,8 @@
                 "box": {
                     "id": "obj-6",
                     "maxclass": "newobj",
-                    "text": "sfs.video_analysis.basic_motion",
-                    "patching_rect": [170.0, 225.0, 210.0, 22.0]
+                    "text": "js D:/tmp/sfs_project/patchers/sfs.video_analysis.basic_motion.js",
+                    "patching_rect": [170.0, 225.0, 430.0, 22.0]
                 }
             },
             {

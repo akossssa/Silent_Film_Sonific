@@ -34,8 +34,10 @@ logs/tests/
 Use this abstraction in Max patches:
 
 ```text
-sfs.debug.logger <component_name>
+js sfs.debug.logger.js <component_name>
 ```
+
+Use this form inside patches stored in `devtools/max`, where the logger JS lives. Production abstractions should expose diagnostics on an outlet; devtools harnesses can attach the logger when file logging is needed.
 
 Accepted messages:
 
@@ -58,13 +60,13 @@ Max's `console` object can write the current Max Console contents to a text file
 Use:
 
 ```text
-patchers/sfs.debug.console_capture.maxpat
+devtools/max/sfs.debug.console_capture.maxpat
 ```
 
 Workflow:
 
 1. Reproduce the error in Max.
-2. Open `sfs.debug.console_capture.maxpat`, or click its write button if it is already open.
+2. Open `devtools/max/sfs.debug.console_capture.maxpat`, or click its write button if it is already open.
 3. Inspect:
 
 ```text

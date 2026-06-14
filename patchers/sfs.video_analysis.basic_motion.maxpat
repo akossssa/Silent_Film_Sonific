@@ -89,17 +89,9 @@
             },
             {
                 "box": {
-                    "id": "obj-7",
-                    "maxclass": "newobj",
-                    "text": "sfs.debug.logger sfs.video_analysis.basic_motion",
-                    "patching_rect": [335.0, 165.0, 310.0, 22.0]
-                }
-            },
-            {
-                "box": {
                     "id": "obj-8",
                     "maxclass": "outlet",
-                    "comment": "diagnostics / logger status",
+                    "comment": "diagnostics",
                     "patching_rect": [335.0, 220.0, 30.0, 30.0]
                 }
             },
@@ -107,7 +99,7 @@
                 "box": {
                     "id": "obj-9",
                     "maxclass": "comment",
-                    "text": "Diagnostics output and file snapshots via logs/",
+                    "text": "Diagnostics output for optional devtools logging",
                     "patching_rect": [385.0, 224.0, 285.0, 20.0]
                 }
             }
@@ -127,19 +119,7 @@
             },
             {
                 "patchline": {
-                    "source": ["obj-4", 0],
-                    "destination": ["obj-7", 0]
-                }
-            },
-            {
-                "patchline": {
                     "source": ["obj-4", 1],
-                    "destination": ["obj-7", 0]
-                }
-            },
-            {
-                "patchline": {
-                    "source": ["obj-7", 0],
                     "destination": ["obj-8", 0]
                 }
             }

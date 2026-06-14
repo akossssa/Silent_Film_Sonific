@@ -5,7 +5,9 @@ $ErrorActionPreference = "Stop"
 
 $Root = Split-Path -Parent $PSScriptRoot
 $PatchersDir = Join-Path $Root "patchers"
+$DevtoolsMaxDir = Join-Path $Root "devtools/max"
 $SchemasDir = Join-Path $Root "schemas"
+$MaxSourceDirs = @($PatchersDir, $DevtoolsMaxDir)
 
 $Failures = New-Object System.Collections.Generic.List[string]
 $Warnings = New-Object System.Collections.Generic.List[string]
@@ -30,6 +32,10 @@ function Test-ProjectReference {
         [string]$Reference,
         [string]$FromFile
     )
+
+    if ([System.IO.Path]::IsPathRooted($Reference)) {
+        return Test-Path -LiteralPath $Reference -PathType Leaf
+    }
 
     $Candidates = @(
         (Join-Path $Root $Reference),
@@ -64,6 +70,7 @@ Write-Host ""
 $RequiredDirs = @(
     "docs",
     "patchers",
+    "devtools/max",
     "schemas",
     "logs/max",
     "logs/tests",
@@ -78,8 +85,10 @@ foreach ($Dir in $RequiredDirs) {
 }
 
 $MaxpatFiles = @()
-if (Test-Path -LiteralPath $PatchersDir -PathType Container) {
-    $MaxpatFiles = @(Get-ChildItem -LiteralPath $PatchersDir -Recurse -Filter *.maxpat -File)
+foreach ($Dir in $MaxSourceDirs) {
+    if (Test-Path -LiteralPath $Dir -PathType Container) {
+        $MaxpatFiles += @(Get-ChildItem -LiteralPath $Dir -Recurse -Filter *.maxpat -File)
+    }
 }
 
 foreach ($File in $MaxpatFiles) {
@@ -105,8 +114,8 @@ foreach ($File in $MaxpatFiles) {
             continue
         }
 
-        if ($Trimmed -match '^js\s+([^\s]+)') {
-            $ScriptName = $Matches[1]
+        if ($Trimmed -match '^js\s+(?:"([^"]+)"|([^\s]+))') {
+            $ScriptName = if ($Matches[1]) { $Matches[1] } else { $Matches[2] }
             if ($ScriptName -notmatch '^#') {
                 if (-not (Test-ProjectReference -Reference $ScriptName -FromFile $File.FullName)) {
                     Add-Failure "Missing JS file referenced by $(Get-ProjectRelativePath $File.FullName): $ScriptName"
@@ -114,8 +123,19 @@ foreach ($File in $MaxpatFiles) {
             }
         }
 
+        if ($Trimmed -match '^bpatcher\s+.*@name\s+([^\s]+\.maxpat)') {
+            $PatcherName = $Matches[1]
+            if (-not (Test-ProjectReference -Reference $PatcherName -FromFile $File.FullName)) {
+                Add-Failure "Missing bpatcher file referenced by $(Get-ProjectRelativePath $File.FullName): $PatcherName"
+            }
+        }
+
         $FirstToken = ($Trimmed -split '\s+')[0]
-        if ($FirstToken -match '^sfs\.') {
+        if ($FirstToken -match '\.maxpat$') {
+            if (-not (Test-ProjectReference -Reference $FirstToken -FromFile $File.FullName)) {
+                Add-Failure "Missing patcher file referenced by $(Get-ProjectRelativePath $File.FullName): $FirstToken"
+            }
+        } elseif ($FirstToken -match '^sfs\.') {
             $AbstractionFile = "$FirstToken.maxpat"
             $AbstractionPath = Join-Path $PatchersDir $AbstractionFile
             if (-not (Test-Path -LiteralPath $AbstractionPath -PathType Leaf)) {
@@ -135,8 +155,10 @@ foreach ($File in $SchemaFiles) {
 }
 
 $JsFiles = @()
-if (Test-Path -LiteralPath $PatchersDir -PathType Container) {
-    $JsFiles = @(Get-ChildItem -LiteralPath $PatchersDir -Recurse -Filter *.js -File)
+foreach ($Dir in $MaxSourceDirs) {
+    if (Test-Path -LiteralPath $Dir -PathType Container) {
+        $JsFiles += @(Get-ChildItem -LiteralPath $Dir -Recurse -Filter *.js -File)
+    }
 }
 
 foreach ($File in $JsFiles) {

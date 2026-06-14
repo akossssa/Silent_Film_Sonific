@@ -208,8 +208,8 @@
                 "box": {
                     "id": "obj-23",
                     "maxclass": "newobj",
-                    "text": "sfs.video_analysis.basic_motion",
-                    "patching_rect": [420.0, 330.0, 210.0, 22.0]
+                    "text": "js D:/tmp/sfs_project/patchers/sfs.video_analysis.basic_motion.js",
+                    "patching_rect": [420.0, 330.0, 430.0, 22.0]
                 }
             },
             {
@@ -234,6 +234,14 @@
                     "maxclass": "newobj",
                     "text": "print sfs.video_features.valid",
                     "patching_rect": [320.0, 480.0, 180.0, 22.0]
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-42",
+                    "maxclass": "newobj",
+                    "text": "js sfs.debug.logger.js sfs.video_analysis.basic_motion.test",
+                    "patching_rect": [590.0, 430.0, 340.0, 22.0]
                 }
             },
             {
@@ -419,6 +427,18 @@
                 "patchline": {
                     "source": ["obj-24", 0],
                     "destination": ["obj-25", 0]
+                }
+            },
+            {
+                "patchline": {
+                    "source": ["obj-23", 0],
+                    "destination": ["obj-42", 0]
+                }
+            },
+            {
+                "patchline": {
+                    "source": ["obj-23", 1],
+                    "destination": ["obj-42", 0]
                 }
             },
             {

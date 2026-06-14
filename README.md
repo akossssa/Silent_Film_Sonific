@@ -18,6 +18,7 @@ Layer A (`SFS_VIDEO_FEATURES v0.1.0`) is implemented and tested:
 - `docs/LAYER_A_TESTING.md` - manual and automated Layer A testing
 - `docs/DEBUGGING.md` - logging and Max Console capture workflow
 - `patchers/sfs.video_analysis.basic_motion.maxpat` - Layer A abstraction
-- `patchers/sfs.video_analysis.basic_motion.test.maxpat` - manual test patch
-- `patchers/sfs.video_analysis.basic_motion.selftest.maxpat` - automated self-test patch
+- `devtools/max/sfs.video_analysis.basic_motion.test.maxpat` - manual test patch
+- `devtools/max/sfs.video_analysis.basic_motion.selftest.maxpat` - automated self-test patch
 - `tools/validate_project.ps1` - project structure and static validation
+- `tools/setup_dev_paths.ps1` - creates the local `D:\tmp\sfs_project` alias used by moved Max devtools patches
