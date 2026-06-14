@@ -50,7 +50,7 @@
                 "box": {
                     "id": "obj-2",
                     "maxclass": "comment",
-                    "text": "Runs generated-matrix tests through the real sfs.video_analysis.basic_motion abstraction and writes logs/tests/layer_a_selftest.latest.json.",
+                    "text": "Runs generated-matrix tests through the production Layer A analysis JS and writes logs/tests/layer_a_selftest.latest.json.",
                     "linecount": 2,
                     "patching_rect": [35.0, 50.0, 650.0, 36.0]
                 }

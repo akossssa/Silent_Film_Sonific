@@ -8,14 +8,14 @@ Layer A is considered correct when it satisfies both the interface contract and 
 - `patchers/sfs.video_analysis.basic_motion.js` computes the MVP features.
 - `devtools/max/sfs.video_analysis.basic_motion.test.maxpat` is the manual Max test harness.
 - `devtools/max/sfs.validate_video_features.js` validates the dictionary contract inside Max.
-- `devtools/max/sfs.debug.logger.js` writes diagnostics and latest dictionary snapshots.
+- `devtools/max/sfs.debug.logger.js` writes diagnostics and latest dictionary snapshots when attached by a devtools patch.
 - `schemas/SFS_VIDEO_FEATURES.schema.json` documents the JSON-compatible schema.
 
 ## Contract Tests
 
 Open `devtools/max/sfs.video_analysis.basic_motion.test.maxpat`.
 
-The output from `sfs.video_analysis.basic_motion` is connected to `js sfs.validate_video_features.js`.
+The output from the production Layer A analysis object is connected to `js sfs.validate_video_features.js`.
 
 Passing output looks like:
 

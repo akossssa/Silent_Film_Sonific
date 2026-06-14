@@ -105,7 +105,7 @@ logs/snapshots/
 ```
 
 If the error happens before our abstractions load, Max may only print it to the Max Console. In that case, paste the exact console line.
-For most of those cases, use `sfs.debug.console_capture.maxpat` to export the console instead.
+For most of those cases, use `devtools/max/sfs.debug.console_capture.maxpat` to export the console instead.
 
 ## Scripted Checks
 
