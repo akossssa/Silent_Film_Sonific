@@ -1,0 +1,4 @@
+interface:
+  display_name: "SFS Max Debugging"
+  short_description: "Inspect Max logs, console exports, and diagnostics"
+  default_prompt: "Use $sfs-max-debugging to debug a Max console or runtime issue."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SFS Project Workflow"
+  short_description: "Repo layout, validation, and Git workflow"
+  default_prompt: "Use $sfs-project-workflow to make a safe project change in Silent Film Sonific."

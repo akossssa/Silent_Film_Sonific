@@ -17,6 +17,8 @@ Layer A (`SFS_VIDEO_FEATURES v0.1.0`) is implemented and tested:
 - `docs/REQUIREMENTS.md` - project requirements and schemas
 - `docs/LAYER_A_TESTING.md` - manual and automated Layer A testing
 - `docs/DEBUGGING.md` - logging and Max Console capture workflow
+- `AGENTS.md` - project instructions for Codex and other coding agents
+- `.codex/skills/` - project-local Codex skills for workflow, Max debugging, and Layer A testing
 - `patchers/sfs.video_analysis.basic_motion.maxpat` - Layer A abstraction
 - `devtools/max/sfs.video_analysis.basic_motion.test.maxpat` - manual test patch
 - `devtools/max/sfs.video_analysis.basic_motion.selftest.maxpat` - automated self-test patch

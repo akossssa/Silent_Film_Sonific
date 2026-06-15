@@ -1,0 +1,4 @@
+interface:
+  display_name: "SFS Layer A Testing"
+  short_description: "Run and interpret Layer A validation tests"
+  default_prompt: "Use $sfs-layer-a-testing to verify Layer A after a change."
