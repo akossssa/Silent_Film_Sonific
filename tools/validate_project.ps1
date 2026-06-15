@@ -6,6 +6,7 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 $PatchersDir = Join-Path $Root "patchers"
 $DevtoolsMaxDir = Join-Path $Root "devtools/max"
+$TestdataDir = Join-Path $Root "devtools/testdata"
 $SchemasDir = Join-Path $Root "schemas"
 $MaxSourceDirs = @($PatchersDir, $DevtoolsMaxDir)
 
@@ -71,6 +72,7 @@ $RequiredDirs = @(
     "docs",
     "patchers",
     "devtools/max",
+    "devtools/testdata",
     "schemas",
     "logs/max",
     "logs/tests",
@@ -154,6 +156,15 @@ foreach ($File in $SchemaFiles) {
     [void](Read-JsonFile $File)
 }
 
+$TestdataJsonFiles = @()
+if (Test-Path -LiteralPath $TestdataDir -PathType Container) {
+    $TestdataJsonFiles = @(Get-ChildItem -LiteralPath $TestdataDir -Recurse -Filter *.json -File)
+}
+
+foreach ($File in $TestdataJsonFiles) {
+    [void](Read-JsonFile $File)
+}
+
 $JsFiles = @()
 foreach ($Dir in $MaxSourceDirs) {
     if (Test-Path -LiteralPath $Dir -PathType Container) {
@@ -189,6 +200,7 @@ if ($null -eq $Node) {
 Write-Host "Patchers: $($MaxpatFiles.Count)"
 Write-Host "Schemas:  $($SchemaFiles.Count)"
 Write-Host "Scripts:  $($JsFiles.Count)"
+Write-Host "Test data JSON: $($TestdataJsonFiles.Count)"
 Write-Host ""
 
 if ($Warnings.Count -gt 0) {

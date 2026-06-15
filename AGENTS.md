@@ -8,11 +8,14 @@ Silent Film Sonific is a Max/MSP/Jitter project for sonifying silent film throug
 
 Layer A is complete as an MVP. It outputs `SFS_VIDEO_FEATURES v0.1.0`: motion, brightness, contrast, cut detection, and optional left/center/right regional values.
 
+Layer B implementation is not built yet. Its initial test foundation lives in `docs/LAYER_B_TESTING.md`, `schemas/SFS_MUSICAL_CONTROL.schema.json`, and `devtools/testdata/layer_b/interpretation_mvp_sequences.json`.
+
 ## Repo Layout
 
 - `patchers/`: production Max abstractions and production JavaScript only.
 - `devtools/max/`: manual tests, automated self-tests, console capture, logging, and validators.
 - `docs/`: requirements, debugging workflow, and Layer A testing instructions.
+- `devtools/testdata/`: tracked deterministic fixture data for test harnesses.
 - `schemas/`: JSON schemas for project data contracts.
 - `tools/`: PowerShell setup and validation scripts.
 - `logs/`: generated runtime evidence; keep `.gitkeep` files, do not commit generated logs.

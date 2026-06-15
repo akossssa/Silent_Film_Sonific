@@ -1,0 +1,466 @@
+{
+  "schema": "SFS_LAYER_B_TEST_CASES",
+  "version": "0.1.0",
+  "target_input_schema": "SFS_VIDEO_FEATURES",
+  "target_output_schema": "SFS_MUSICAL_CONTROL",
+  "description": "Deterministic fixture sequences for Layer B interpretation MVP tests. Expected control values are ranges because smoothing and mapping curves are implementation details.",
+  "assumptions": {
+    "input_rate_hz": 10,
+    "allowed_mvp_states": ["calm", "tension", "action", "chaos"],
+    "range_assertions_are_inclusive": true
+  },
+  "cases": [
+    {
+      "id": "calm_static_dark",
+      "purpose": "Low motion, low brightness, and low contrast should settle into calm with low musical controls.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "calm_static_dark", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.02, "brightness": 0.07, "contrast": 0.04, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "calm_static_dark", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.01, "brightness": 0.08, "contrast": 0.03, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "calm_static_dark", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.03, "brightness": 0.07, "contrast": 0.04, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 300,
+          "source": { "type": "matrix", "name": "calm_static_dark", "frame": 3, "fps": 10 },
+          "features": { "motion": 0.02, "brightness": 0.08, "contrast": 0.04, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state": "calm",
+        "final_controls": {
+          "energy": { "min": 0.0, "max": 0.25 },
+          "density": { "min": 0.0, "max": 0.25 },
+          "tension": { "min": 0.0, "max": 0.25 },
+          "brightness": { "min": 0.0, "max": 0.2 },
+          "activity": { "min": 0.0, "max": 0.25 },
+          "variation": { "min": 0.0, "max": 0.25 }
+        },
+        "sequence": {
+          "state_changes_max": 1,
+          "scene_change_count": 0,
+          "accent_count_max": 1,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "calm_static_bright",
+      "purpose": "High visual brightness without motion should raise musical brightness while remaining calm.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "calm_static_bright", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.01, "brightness": 0.84, "contrast": 0.08, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "calm_static_bright", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.02, "brightness": 0.86, "contrast": 0.07, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "calm_static_bright", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.01, "brightness": 0.85, "contrast": 0.09, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state": "calm",
+        "final_controls": {
+          "energy": { "min": 0.0, "max": 0.25 },
+          "density": { "min": 0.0, "max": 0.25 },
+          "tension": { "min": 0.0, "max": 0.3 },
+          "brightness": { "min": 0.65, "max": 1.0 },
+          "activity": { "min": 0.0, "max": 0.25 },
+          "variation": { "min": 0.0, "max": 0.25 }
+        },
+        "sequence": {
+          "state_changes_max": 1,
+          "scene_change_count": 0,
+          "accent_count_max": 1,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "tension_build",
+      "purpose": "Sustained moderate motion with rising contrast should move from calm toward tension without scene-change events.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "tension_build", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.12, "brightness": 0.32, "contrast": 0.42, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "tension_build", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.15, "brightness": 0.33, "contrast": 0.52, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "tension_build", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.18, "brightness": 0.34, "contrast": 0.62, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 300,
+          "source": { "type": "matrix", "name": "tension_build", "frame": 3, "fps": 10 },
+          "features": { "motion": 0.2, "brightness": 0.35, "contrast": 0.7, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state": "tension",
+        "final_controls": {
+          "energy": { "min": 0.25, "max": 0.6 },
+          "density": { "min": 0.2, "max": 0.55 },
+          "tension": { "min": 0.55, "max": 0.9 },
+          "brightness": { "min": 0.2, "max": 0.5 },
+          "activity": { "min": 0.2, "max": 0.55 },
+          "variation": { "min": 0.15, "max": 0.55 }
+        },
+        "sequence": {
+          "state_changes_min": 1,
+          "state_changes_max": 2,
+          "scene_change_count": 0,
+          "accent_count_max": 1,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "action_sustained_motion",
+      "purpose": "Sustained high motion should produce action with high energy, density, and activity.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "action_sustained_motion", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.56, "brightness": 0.46, "contrast": 0.38, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "action_sustained_motion", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.64, "brightness": 0.5, "contrast": 0.43, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "action_sustained_motion", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.71, "brightness": 0.52, "contrast": 0.45, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 300,
+          "source": { "type": "matrix", "name": "action_sustained_motion", "frame": 3, "fps": 10 },
+          "features": { "motion": 0.68, "brightness": 0.5, "contrast": 0.44, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state": "action",
+        "final_controls": {
+          "energy": { "min": 0.55, "max": 0.9 },
+          "density": { "min": 0.45, "max": 0.9 },
+          "tension": { "min": 0.25, "max": 0.75 },
+          "brightness": { "min": 0.35, "max": 0.7 },
+          "activity": { "min": 0.55, "max": 0.95 },
+          "variation": { "min": 0.2, "max": 0.7 }
+        },
+        "sequence": {
+          "state_changes_min": 1,
+          "state_changes_max": 2,
+          "scene_change_count": 0,
+          "accent_count_max": 1,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "chaos_cut_burst",
+      "purpose": "A hard visual cut with very high motion and contrast should produce chaos and one-shot transition events.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "chaos_cut_burst", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.1, "brightness": 0.18, "contrast": 0.2, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "chaos_cut_burst", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.18, "brightness": 0.22, "contrast": 0.28, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "chaos_cut_burst", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.93, "brightness": 0.9, "contrast": 0.92, "cut": true, "cut_strength": 0.96 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 300,
+          "source": { "type": "matrix", "name": "chaos_cut_burst", "frame": 3, "fps": 10 },
+          "features": { "motion": 0.86, "brightness": 0.78, "contrast": 0.88, "cut": false, "cut_strength": 0.1 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state": "chaos",
+        "final_controls": {
+          "energy": { "min": 0.75, "max": 1.0 },
+          "density": { "min": 0.65, "max": 1.0 },
+          "tension": { "min": 0.75, "max": 1.0 },
+          "brightness": { "min": 0.6, "max": 1.0 },
+          "activity": { "min": 0.75, "max": 1.0 },
+          "variation": { "min": 0.6, "max": 1.0 }
+        },
+        "sequence": {
+          "state_changes_min": 1,
+          "state_changes_max": 3,
+          "scene_change_count_min": 1,
+          "scene_change_count_max": 1,
+          "accent_count_min": 1,
+          "reset_phrase_count_min": 1
+        },
+        "event_frames": [
+          {
+            "input_index": 2,
+            "scene_change": true,
+            "accent": true,
+            "reset_phrase": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "zone_variation_asymmetry",
+      "purpose": "Asymmetric regional motion should increase variation without requiring a scene-change event.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "zone_variation_asymmetry", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.26, "brightness": 0.42, "contrast": 0.34, "cut": false, "cut_strength": 0.0 },
+          "zones": {
+            "left": { "motion": 0.05, "brightness": 0.28, "contrast": 0.22 },
+            "center": { "motion": 0.78, "brightness": 0.58, "contrast": 0.5 },
+            "right": { "motion": 0.12, "brightness": 0.34, "contrast": 0.28 }
+          }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "zone_variation_asymmetry", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.31, "brightness": 0.44, "contrast": 0.38, "cut": false, "cut_strength": 0.0 },
+          "zones": {
+            "left": { "motion": 0.06, "brightness": 0.3, "contrast": 0.24 },
+            "center": { "motion": 0.84, "brightness": 0.62, "contrast": 0.56 },
+            "right": { "motion": 0.14, "brightness": 0.36, "contrast": 0.3 }
+          }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "zone_variation_asymmetry", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.3, "brightness": 0.43, "contrast": 0.36, "cut": false, "cut_strength": 0.0 },
+          "zones": {
+            "left": { "motion": 0.05, "brightness": 0.3, "contrast": 0.22 },
+            "center": { "motion": 0.82, "brightness": 0.61, "contrast": 0.54 },
+            "right": { "motion": 0.13, "brightness": 0.35, "contrast": 0.29 }
+          }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state_allowed": ["tension", "action"],
+        "final_controls": {
+          "energy": { "min": 0.25, "max": 0.7 },
+          "density": { "min": 0.2, "max": 0.7 },
+          "tension": { "min": 0.2, "max": 0.75 },
+          "brightness": { "min": 0.3, "max": 0.65 },
+          "activity": { "min": 0.25, "max": 0.75 },
+          "variation": { "min": 0.45, "max": 0.9 }
+        },
+        "sequence": {
+          "state_changes_max": 2,
+          "scene_change_count": 0,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "no_zones_valid",
+      "purpose": "Layer B must work when optional Layer A zones are absent.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "no_zones_valid", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.22, "brightness": 0.5, "contrast": 0.31, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "no_zones_valid", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.24, "brightness": 0.51, "contrast": 0.32, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state_allowed": ["calm", "tension"],
+        "final_controls": {
+          "energy": { "min": 0.1, "max": 0.5 },
+          "density": { "min": 0.05, "max": 0.5 },
+          "tension": { "min": 0.05, "max": 0.5 },
+          "brightness": { "min": 0.35, "max": 0.7 },
+          "activity": { "min": 0.1, "max": 0.5 },
+          "variation": { "min": 0.0, "max": 0.45 }
+        },
+        "sequence": {
+          "state_changes_max": 1,
+          "scene_change_count": 0,
+          "reset_phrase_count": 0
+        }
+      }
+    },
+    {
+      "id": "hysteresis_threshold_noise",
+      "purpose": "Values near a state threshold should not cause rapid state flapping.",
+      "inputs": [
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 0,
+          "source": { "type": "matrix", "name": "hysteresis_threshold_noise", "frame": 0, "fps": 10 },
+          "features": { "motion": 0.28, "brightness": 0.4, "contrast": 0.48, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 100,
+          "source": { "type": "matrix", "name": "hysteresis_threshold_noise", "frame": 1, "fps": 10 },
+          "features": { "motion": 0.34, "brightness": 0.42, "contrast": 0.5, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 200,
+          "source": { "type": "matrix", "name": "hysteresis_threshold_noise", "frame": 2, "fps": 10 },
+          "features": { "motion": 0.3, "brightness": 0.41, "contrast": 0.47, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 300,
+          "source": { "type": "matrix", "name": "hysteresis_threshold_noise", "frame": 3, "fps": 10 },
+          "features": { "motion": 0.36, "brightness": 0.43, "contrast": 0.51, "cut": false, "cut_strength": 0.0 }
+        },
+        {
+          "schema": "SFS_VIDEO_FEATURES",
+          "version": "0.1.0",
+          "timestamp_ms": 400,
+          "source": { "type": "matrix", "name": "hysteresis_threshold_noise", "frame": 4, "fps": 10 },
+          "features": { "motion": 0.29, "brightness": 0.4, "contrast": 0.49, "cut": false, "cut_strength": 0.0 }
+        }
+      ],
+      "expected": {
+        "valid_output_schema": true,
+        "final_state_allowed": ["calm", "tension"],
+        "final_controls": {
+          "energy": { "min": 0.15, "max": 0.65 },
+          "density": { "min": 0.1, "max": 0.6 },
+          "tension": { "min": 0.25, "max": 0.75 },
+          "brightness": { "min": 0.25, "max": 0.6 },
+          "activity": { "min": 0.15, "max": 0.65 },
+          "variation": { "min": 0.1, "max": 0.55 }
+        },
+        "sequence": {
+          "state_changes_max": 2,
+          "scene_change_count": 0,
+          "accent_count_max": 1,
+          "reset_phrase_count": 0
+        }
+      }
+    }
+  ],
+  "negative_cases": [
+    {
+      "id": "missing_required_feature",
+      "purpose": "Invalid Layer A input should be rejected or reported instead of producing trusted musical control data.",
+      "input": {
+        "schema": "SFS_VIDEO_FEATURES",
+        "version": "0.1.0",
+        "timestamp_ms": 0,
+        "source": { "type": "matrix", "name": "missing_required_feature", "frame": 0, "fps": 10 },
+        "features": { "motion": 0.1, "brightness": 0.2, "contrast": 0.3, "cut": false }
+      },
+      "expected": {
+        "input_valid": false,
+        "trusted_output_allowed": false
+      }
+    },
+    {
+      "id": "out_of_range_feature",
+      "purpose": "Out-of-range numeric input should be rejected, clamped with a warning, or marked invalid by the test harness.",
+      "input": {
+        "schema": "SFS_VIDEO_FEATURES",
+        "version": "0.1.0",
+        "timestamp_ms": 0,
+        "source": { "type": "matrix", "name": "out_of_range_feature", "frame": 0, "fps": 10 },
+        "features": { "motion": 1.2, "brightness": 0.2, "contrast": 0.3, "cut": false, "cut_strength": 0.0 }
+      },
+      "expected": {
+        "input_valid": false,
+        "trusted_output_allowed": false
+      }
+    }
+  ]
+}
