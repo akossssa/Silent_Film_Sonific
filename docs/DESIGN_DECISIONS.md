@@ -62,15 +62,25 @@ Layer B must remain independent of the selected sound engine.
 
 ---
 
-## DD-005: Deterministic and Generative Modes
+## DD-005: Deterministic, Probabilistic, and Generative Modes
 
 The architecture must support:
 
-- deterministic behaviour
-- probabilistic behaviour
-- generative behaviour
+- deterministic behavior
+- probabilistic behavior
+- generative behavior
 
-The choice belongs to Layer C and must not require changes to Layer A.
+These modes may be implemented in Layer B, Layer C, or both.
+
+Layer A should remain focused on measurable video features and should not need
+to change when interpretation or music-generation strategies change.
+
+### Rationale
+
+Interpretation may be deterministic, probabilistic, machine-learning-based, or
+hybrid. Sound generation may also be deterministic, probabilistic, or generative.
+Keeping these choices out of Layer A preserves the replaceability of the video
+analysis layer.
 
 ---
 
