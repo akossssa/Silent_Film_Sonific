@@ -22,7 +22,11 @@ Layer B implementation is not built yet. Its initial test foundation lives in `d
 
 ## Required Workflow
 
-- Read the relevant docs before changing behavior: `docs/REQUIREMENTS.md`, `docs/LAYER_A_TESTING.md`, and `docs/DEBUGGING.md`.
+- Before changing behavior, read the baseline docs: `docs/REQUIREMENTS.md` and `docs/DESIGN_DECISIONS.md`.
+- For Max/runtime debugging, also read `docs/DEBUGGING.md`.
+- For Layer A work, also read `docs/LAYER_A_TESTING.md`.
+- For Layer B work, also read `docs/LAYER_B_TESTING.md` and `docs/RESEARCH.md`.
+- For research or architecture work, also read `docs/RESEARCH.md` and `docs/CODEX_RESEARCH_WORKFLOW.md`.
 - Keep `patchers/` production-only. Do not move test or debug patches back there.
 - Use `tools\setup_dev_paths.ps1` if `D:\tmp\sfs_project` is missing before opening moved devtools Max patches.
 - Run `powershell -ExecutionPolicy Bypass -File tools\validate_project.ps1` after layout, Max patch, JavaScript, schema, or documentation changes.

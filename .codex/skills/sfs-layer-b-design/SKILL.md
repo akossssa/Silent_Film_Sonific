@@ -20,19 +20,22 @@ Layer B is not a video-analysis engine.
 
 ## Inputs
 
-Layer B receives:
+Layer B receives `SFS_VIDEO_FEATURES`.
 
-SFS_VIDEO_FEATURES
+The source of truth is:
 
-Examples:
+```text
+schemas/SFS_VIDEO_FEATURES.schema.json
+```
+
+Current MVP input features:
 
 - motion intensity
-- motion direction
 - scene change detection
-- object density
-- brightness statistics
-- contrast statistics
-- camera movement estimates
+- brightness
+- contrast
+- cut strength
+- optional regional zones
 
 Inputs must arrive through documented schemas only.
 
@@ -40,21 +43,41 @@ Inputs must arrive through documented schemas only.
 
 ## Outputs
 
-Layer B produces:
+Layer B produces `SFS_MUSICAL_CONTROL`.
 
-SFS_MUSICAL_CONTROL
+The source of truth is:
 
-Examples:
+```text
+schemas/SFS_MUSICAL_CONTROL.schema.json
+```
 
+Current MVP output controls:
+
+- energy
+- density
 - tension
 - activity
-- density
-- tempo_hint
-- articulation_hint
-- event markers
-- state transitions
+- brightness
+- variation
+
+Current MVP events:
+
+- scene_change
+- accent
+- reset_phrase
+
+Current MVP states:
+
+- calm
+- tension
+- action
+- chaos
 
 Outputs must be schema-compliant.
+
+Treat additional values such as `tempo_hint`, `articulation_hint`, or custom
+state names as future optional extensions. Do not use them in the MVP unless the
+schema, fixtures, and tests are updated first.
 
 ---
 
@@ -103,12 +126,12 @@ A state entered at 0.7 may not leave until 0.5.
 
 Prefer explicit states over ad-hoc thresholds.
 
-Example:
+MVP states:
 
 calm
-→ active
-→ intense
-→ climax
+→ tension
+→ action
+→ chaos
 
 ### Event Detection
 
@@ -129,11 +152,13 @@ Sudden cut is an event.
 
 Every Layer B feature should be testable using fixtures.
 
-Prefer:
+Use the canonical MVP fixture file:
 
-devtools/testdata/layer_b/
+```text
+devtools/testdata/layer_b/interpretation_mvp_sequences.json
+```
 
-over manual Max patch testing.
+Prefer fixture-based tests over manual Max patch testing.
 
 Expected behaviour should be deterministic when deterministic mode is enabled.
 
@@ -168,4 +193,6 @@ Before modifying Layer B:
 - docs/REQUIREMENTS.md
 - docs/DESIGN_DECISIONS.md
 - docs/RESEARCH.md
+- docs/LAYER_B_TESTING.md
 - schemas/*
+- devtools/testdata/layer_b/interpretation_mvp_sequences.json

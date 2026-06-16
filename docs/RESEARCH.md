@@ -163,59 +163,81 @@ This separation prevents the project from becoming a fragile collection of direc
 
 ### 5.1 Layer A Output: Visual Features
 
-Layer A should output measurable visual descriptors.
+Layer A should output measurable visual descriptors using the `SFS_VIDEO_FEATURES`
+contract defined in `schemas/SFS_VIDEO_FEATURES.schema.json`.
 
 Example:
 
 ```json
 {
-  "layer": "A",
-  "type": "SFS_VIDEO_FEATURES",
-  "frame": 1024,
-  "time_sec": 42.68,
-  "motion": {
-    "amount": 0.74,
-    "density": 0.62,
-    "direction_x": 0.81,
-    "direction_y": 0.12
+  "schema": "SFS_VIDEO_FEATURES",
+  "version": "0.1.0",
+  "timestamp_ms": 42680,
+  "source": {
+    "type": "movie",
+    "name": "film.mov",
+    "frame": 1024,
+    "fps": 24
   },
-  "image": {
+  "features": {
+    "motion": 0.74,
     "brightness": 0.41,
     "contrast": 0.70,
-    "edge_density": 0.58
-  },
-  "scene": {
     "cut": false,
-    "change_amount": 0.23
+    "cut_strength": 0.23
+  },
+  "zones": {
+    "left": {
+      "motion": 0.22,
+      "brightness": 0.38,
+      "contrast": 0.51
+    },
+    "center": {
+      "motion": 0.71,
+      "brightness": 0.44,
+      "contrast": 0.67
+    },
+    "right": {
+      "motion": 0.36,
+      "brightness": 0.42,
+      "contrast": 0.49
+    }
   }
 }
 ```
 
 ### 5.2 Layer B Output: Musical Control
 
-Layer B should output interpreted musical state and events.
+Layer B should output interpreted musical state, controls, and events using the
+`SFS_MUSICAL_CONTROL` contract defined in
+`schemas/SFS_MUSICAL_CONTROL.schema.json`.
 
 Example:
 
 ```json
 {
-  "layer": "B",
-  "type": "SFS_MUSICAL_CONTROL",
-  "time_sec": 42.68,
+  "schema": "SFS_MUSICAL_CONTROL",
+  "version": "0.1.0",
+  "timestamp_ms": 42680,
   "state": {
-    "tension": 0.82,
-    "activity": 0.71,
-    "density": 0.65,
-    "stability": 0.30,
-    "tempo_hint": 118
+    "name": "action",
+    "confidence": 0.82,
+    "changed": true,
+    "previous": "tension"
   },
-  "events": [
-    {
-      "name": "chase_like_motion",
-      "strength": 0.76,
-      "trigger": false
-    }
-  ]
+  "controls": {
+    "energy": 0.72,
+    "density": 0.64,
+    "tension": 0.58,
+    "brightness": 0.45,
+    "activity": 0.77,
+    "variation": 0.39
+  },
+  "events": {
+    "scene_change": true,
+    "accent": true,
+    "reset_phrase": false
+  }
 }
 ```
 
