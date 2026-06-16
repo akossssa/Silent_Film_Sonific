@@ -36,3 +36,5 @@ Use these project-local Codex skills when they match the task:
 - `$sfs-project-workflow`: repo layout, validation, cleanup, documentation, and Git workflow.
 - `$sfs-max-debugging`: Max Console capture, JSONL logs, patch load errors, and runtime debugging.
 - `$sfs-layer-a-testing`: Layer A validation, self-test interpretation, and `SFS_VIDEO_FEATURES` checks.
+- `$sfs-research` - research workflow for video-to-music systems, Max/Jitter techniques, adaptive music, sonification, and architecture decisions.
+- `$sfs-layer-b-design` - Layer B semantic interpretation, musical control state logic, smoothing, hysteresis, and schema-compliant output.
