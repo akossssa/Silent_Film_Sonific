@@ -65,6 +65,29 @@ Offline rendering and soundtrack generation are secondary but supported use case
 
 ---
 
+### 2.4 Research Positioning
+
+Silent Film Sonific is positioned between:
+
+* traditional video sonification systems;
+* adaptive music and game-audio architectures;
+* recent semantic video-to-music generation research.
+
+The project does not aim to be a monolithic AI music generator. Instead, it uses
+an explicit intermediate representation:
+
+```text
+video features -> semantic / musical interpretation -> music engine control
+```
+
+This keeps the Max/MSP implementation modular, testable, and suitable for
+real-time performance.
+
+Low-level visual features may influence music, but the main architecture should
+preserve the Layer A -> Layer B -> Layer C separation described in this document.
+
+---
+
 ## 3. System Architecture
 
 ```text
