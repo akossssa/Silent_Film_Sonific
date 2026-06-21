@@ -8,7 +8,7 @@ Silent Film Sonific is a Max/MSP/Jitter project for sonifying silent film throug
 
 Layer A is complete as an MVP. It outputs `SFS_VIDEO_FEATURES v0.1.0`: motion, brightness, contrast, cut detection, and optional left/center/right regional values.
 
-Layer B implementation is not built yet. Its initial test foundation lives in `docs/LAYER_B_TESTING.md`, `schemas/SFS_MUSICAL_CONTROL.schema.json`, and `devtools/testdata/layer_b/interpretation_mvp_sequences.json`.
+Layer B has an MVP deterministic state-machine implementation. It outputs `SFS_MUSICAL_CONTROL v0.1.0` from `SFS_VIDEO_FEATURES` using smoothing, hysteresis, MVP state transitions, and one-shot events.
 
 ## Repo Layout
 
@@ -31,6 +31,7 @@ Layer B implementation is not built yet. Its initial test foundation lives in `d
 - Use `tools\setup_dev_paths.ps1` if `D:\tmp\sfs_project` is missing before opening moved devtools Max patches.
 - Run `powershell -ExecutionPolicy Bypass -File tools\validate_project.ps1` after layout, Max patch, JavaScript, schema, or documentation changes.
 - When Max behavior matters, prefer file evidence from `logs/max/sfs-max-console.txt`, `logs/max/sfs-debug.jsonl`, and `logs/tests/layer_a_selftest.latest.json`.
+- For Layer B behavior, also inspect `logs/tests/layer_b_selftest.latest.json` and `logs/tests/layer_b_selftest.jsonl`.
 - Do not commit generated runtime logs, reports, or snapshots.
 
 ## Local Skills

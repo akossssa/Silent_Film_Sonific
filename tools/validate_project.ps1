@@ -8,7 +8,9 @@ $PatchersDir = Join-Path $Root "patchers"
 $DevtoolsMaxDir = Join-Path $Root "devtools/max"
 $TestdataDir = Join-Path $Root "devtools/testdata"
 $SchemasDir = Join-Path $Root "schemas"
+$ToolsDir = Join-Path $Root "tools"
 $MaxSourceDirs = @($PatchersDir, $DevtoolsMaxDir)
+$JsSourceDirs = @($PatchersDir, $DevtoolsMaxDir, $ToolsDir)
 
 $Failures = New-Object System.Collections.Generic.List[string]
 $Warnings = New-Object System.Collections.Generic.List[string]
@@ -166,7 +168,7 @@ foreach ($File in $TestdataJsonFiles) {
 }
 
 $JsFiles = @()
-foreach ($Dir in $MaxSourceDirs) {
+foreach ($Dir in $JsSourceDirs) {
     if (Test-Path -LiteralPath $Dir -PathType Container) {
         $JsFiles += @(Get-ChildItem -LiteralPath $Dir -Recurse -Filter *.js -File)
     }

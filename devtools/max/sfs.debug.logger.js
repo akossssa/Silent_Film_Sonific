@@ -6,6 +6,9 @@ var component = jsarguments.length > 1 ? String(jsarguments[1]) : "unknown";
 var logPath = projectPath("logs/max/sfs-debug.jsonl");
 var snapshotDir = projectPath("logs/snapshots");
 var logDictionaries = 0;
+var minLogLevel = "info";
+var snapshotIntervalMs = 0;
+var lastSnapshotMs = {};
 
 function loadbang() {
     writeLog("info", "logger_ready", "logger initialized", {
@@ -39,11 +42,29 @@ function log_dictionaries(value) {
     logDictionaries = Number(value) !== 0 ? 1 : 0;
 }
 
+function min_level(value) {
+    var candidate = String(value || "info").toLowerCase();
+
+    if (levelRank(candidate) >= 0) {
+        minLogLevel = candidate;
+    }
+}
+
+function snapshot_interval_ms(value) {
+    var parsed = Math.floor(Number(value));
+    snapshotIntervalMs = isFinite(parsed) && parsed > 0 ? parsed : 0;
+}
+
 function log() {
     var args = arrayfromargs(arguments);
     var level = args.length > 0 ? String(args[0]) : "info";
     var event = args.length > 1 ? String(args[1]) : "message";
     var message = args.length > 2 ? args.slice(2).join(" ") : "";
+
+    if (!shouldLog(level)) {
+        return;
+    }
+
     writeLog(level, event, message, null);
 }
 
@@ -52,18 +73,24 @@ function dictionary(name) {
 }
 
 function bang() {
-    writeLog("info", "bang", "logger received bang", null);
+    if (shouldLog("info")) {
+        writeLog("info", "bang", "logger received bang", null);
+    }
 }
 
 function anything() {
     var args = arrayfromargs(arguments);
-    writeLog("info", String(messagename), args.join(" "), null);
+    if (shouldLog("info")) {
+        writeLog("info", String(messagename), args.join(" "), null);
+    }
 }
 
 function snapshotDictionary(name) {
     var dict;
     var schema = null;
     var snapshotPath;
+    var nowMs;
+    var sceneCut;
 
     try {
         dict = new Dict(name);
@@ -73,31 +100,63 @@ function snapshotDictionary(name) {
         return;
     }
 
-    snapshotPath = snapshotDir + "/" + snapshotFileName(name, schema);
+    nowMs = new Date().getTime();
+    sceneCut = isSceneCut(dict, schema);
 
-    if (schema === "SFS_VIDEO_FEATURES") {
-        if (!writeText(snapshotPath, stringifyJson(videoFeaturesPayload(dict)))) {
-            writeLog("error", "snapshot_write_failed", "could not write snapshot " + snapshotPath, null);
-            return;
-        }
-        outlet(0, "snapshot", snapshotPath);
-    } else {
-        try {
-            dict.export_json(snapshotPath);
-            outlet(0, "snapshot", snapshotPath);
-        } catch (error) {
-            writeLog("error", "snapshot_write_failed", "could not write snapshot " + snapshotPath, null);
-            return;
-        }
+    if (snapshotIntervalMs > 0 && !sceneCut && lastSnapshotMs[name] !== undefined &&
+            nowMs - lastSnapshotMs[name] < snapshotIntervalMs) {
+        return;
     }
 
-    if (logDictionaries || isSceneCut(dict)) {
+    lastSnapshotMs[name] = nowMs;
+
+    snapshotPath = snapshotDir + "/" + snapshotFileName(name, schema);
+
+    try {
+        dict.export_json(snapshotPath);
+        outlet(0, "snapshot", snapshotPath);
+    } catch (error) {
+        writeLog("error", "snapshot_write_failed", "could not write snapshot " + snapshotPath, null);
+        return;
+    }
+
+    if (logDictionaries || sceneCut) {
         writeLog("info", "dictionary_snapshot", "dictionary snapshot written", {
             dict: name,
             schema: schema,
             snapshot: snapshotPath
         });
     }
+}
+
+function shouldLog(level) {
+    var incomingRank = levelRank(String(level || "info").toLowerCase());
+    var minimumRank = levelRank(minLogLevel);
+
+    if (incomingRank < 0) {
+        incomingRank = levelRank("info");
+    }
+    if (minimumRank < 0) {
+        minimumRank = levelRank("info");
+    }
+
+    return incomingRank >= minimumRank;
+}
+
+function levelRank(level) {
+    if (level === "debug") {
+        return 10;
+    }
+    if (level === "info") {
+        return 20;
+    }
+    if (level === "warn") {
+        return 30;
+    }
+    if (level === "error") {
+        return 40;
+    }
+    return -1;
 }
 
 function writeLog(level, event, message, data) {
@@ -181,74 +240,6 @@ function appendLine(filename, line) {
     return 1;
 }
 
-function writeText(filename, text) {
-    var file = new File(filename, "readwrite");
-    var previousLength = 0;
-    var output = String(text);
-
-    if (!file.isopen) {
-        file = new File(filename, "write");
-    }
-
-    if (!file.isopen) {
-        return 0;
-    }
-
-    previousLength = file.eof || 0;
-    if (previousLength > output.length) {
-        output += "\n" + repeatString(" ", previousLength - output.length);
-    }
-
-    file.position = 0;
-    file.writestring(output);
-    file.close();
-    return 1;
-}
-
-function repeatString(value, count) {
-    var output = "";
-    for (var i = 0; i < count; i += 1) {
-        output += value;
-    }
-    return output;
-}
-
-function videoFeaturesPayload(dict) {
-    return {
-        schema: stringValue(safeGet(dict, "schema"), "SFS_VIDEO_FEATURES"),
-        version: stringValue(safeGet(dict, "version"), "0.1.0"),
-        timestamp_ms: integerValue(safeGet(dict, "timestamp_ms"), 0),
-        source: {
-            type: stringValue(safeGet(dict, "source::type"), "unknown"),
-            name: nullableStringValue(safeGet(dict, "source::name")),
-            frame: nullableIntegerValue(safeGet(dict, "source::frame")),
-            fps: nullableNumberValue(safeGet(dict, "source::fps")),
-            width: integerValue(safeGet(dict, "source::width"), 0),
-            height: integerValue(safeGet(dict, "source::height"), 0)
-        },
-        features: {
-            motion: numberValue(safeGet(dict, "features::motion"), 0),
-            brightness: numberValue(safeGet(dict, "features::brightness"), 0),
-            contrast: numberValue(safeGet(dict, "features::contrast"), 0),
-            cut: booleanValue(safeGet(dict, "features::cut")),
-            cut_strength: numberValue(safeGet(dict, "features::cut_strength"), 0)
-        },
-        zones: {
-            left: zonePayload(dict, "left"),
-            center: zonePayload(dict, "center"),
-            right: zonePayload(dict, "right")
-        }
-    };
-}
-
-function zonePayload(dict, name) {
-    return {
-        motion: numberValue(safeGet(dict, "zones::" + name + "::motion"), 0),
-        brightness: numberValue(safeGet(dict, "zones::" + name + "::brightness"), 0),
-        contrast: numberValue(safeGet(dict, "zones::" + name + "::contrast"), 0)
-    };
-}
-
 function snapshotFileName(name, schema) {
     if (schema === "SFS_VIDEO_FEATURES") {
         return "sfs_video_features.latest.json";
@@ -259,52 +250,12 @@ function snapshotFileName(name, schema) {
     return sanitize(name) + ".latest.json";
 }
 
-function isSceneCut(dict) {
+function isSceneCut(dict, schema) {
+    if (schema !== "SFS_VIDEO_FEATURES") {
+        return false;
+    }
+
     return safeGet(dict, "features::cut") === true || safeGet(dict, "features::cut") === 1;
-}
-
-function booleanValue(value) {
-    return value === true || value === 1 || value === "1" || value === "true";
-}
-
-function numberValue(value, fallback) {
-    var parsed = Number(value);
-    return isFinite(parsed) ? parsed : fallback;
-}
-
-function integerValue(value, fallback) {
-    var parsed = parseInt(value, 10);
-    return isFinite(parsed) ? parsed : fallback;
-}
-
-function nullableNumberValue(value) {
-    if (value === null || value === undefined || value === "") {
-        return null;
-    }
-    var parsed = Number(value);
-    return isFinite(parsed) ? parsed : null;
-}
-
-function nullableIntegerValue(value) {
-    if (value === null || value === undefined || value === "") {
-        return null;
-    }
-    var parsed = parseInt(value, 10);
-    return isFinite(parsed) ? parsed : null;
-}
-
-function stringValue(value, fallback) {
-    if (value === null || value === undefined || value === "") {
-        return fallback;
-    }
-    return String(value);
-}
-
-function nullableStringValue(value) {
-    if (value === null || value === undefined || value === "") {
-        return null;
-    }
-    return String(value);
 }
 
 function safeGet(dict, key) {

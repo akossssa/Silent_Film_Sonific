@@ -47,11 +47,18 @@ log warn event_name message text
 log error event_name message text
 dictionary sfs_video_features
 log_dictionaries 1
+min_level warn
+snapshot_interval_ms 1000
 path D:/absolute/path/to/log.jsonl
 snapshot_dir D:/absolute/path/to/snapshots
 ```
 
 The logger appends JSON Lines to `logs/max/sfs-debug.jsonl`. It writes dictionary snapshots as JSON files.
+Use `min_level warn` to suppress routine per-frame info diagnostics. Use `snapshot_interval_ms` to rate-limit dictionary snapshots; `0` preserves the unrestricted default.
+
+## High Movie Memory Use
+
+On Windows, VIDDLL caches decoded movie frames. A large global `Default Cache Size` preference can make a playing `jit.movie` process use more than 1 GB without indicating a Layer A or Layer B leak. Set an explicit `cache_size` on `jit.movie`; the manual Layer A+B patch uses `cache_size 0.02` (approximately 20 MB). Send `dispose` after playback to release the movie and its decoder cache.
 
 ## Max Console Capture
 

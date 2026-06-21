@@ -12,7 +12,13 @@ Layer A (`SFS_VIDEO_FEATURES v0.1.0`) is implemented and tested:
 - scene cut detection
 - optional left/center/right regional features
 
-Layer B test preparation is started: the `SFS_MUSICAL_CONTROL` schema, MVP fixture sequences, and testing approach are documented.
+Layer B (`SFS_MUSICAL_CONTROL v0.1.0`) has an MVP deterministic state-machine implementation:
+
+- smoothing for raw visual controls
+- hysteresis for state stability
+- MVP states: calm, tension, action, chaos
+- controls: energy, density, tension, brightness, activity, variation
+- events: scene_change, accent, reset_phrase
 
 ## Useful Files
 
@@ -28,8 +34,10 @@ Layer B test preparation is started: the `SFS_MUSICAL_CONTROL` schema, MVP fixtu
 * `schemas/SFS_MUSICAL_CONTROL.schema.json` - Layer B to Layer C dictionary contract
 * `devtools/testdata/layer_b/interpretation_mvp_sequences.json` - Layer B MVP fixture sequences
 * `patchers/sfs.video_analysis.basic_motion.maxpat` - Layer A abstraction
+* `patchers/sfs.interpretation.state_machine.maxpat` - Layer B state-machine abstraction
 * `devtools/max/sfs.video_analysis.basic_motion.test.maxpat` - manual test patch
 * `devtools/max/sfs.video_analysis.basic_motion.selftest.maxpat` - automated self-test patch
+* `devtools/max/sfs.interpretation.state_machine.selftest.maxpat` - automated Layer B Max self-test patch
+* `tools/run_layer_b_selftest.js` - Node fixture runner for Layer B
 * `tools/validate_project.ps1` - project structure and static validation
 * `tools/setup_dev_paths.ps1` - creates the local `D:\tmp\sfs_project` alias used by moved Max devtools patches
-

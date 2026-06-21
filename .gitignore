@@ -11,6 +11,12 @@ logs/**/*.txt
 .DS_Store
 Thumbs.db
 
+# Local video fixtures (too large for Git)
+devtools/testdata/*.avi
+devtools/testdata/*.mp4
+devtools/testdata/*.mov
+devtools/testdata/*.mkv
+
 # Local editor state
 .vscode/
 .idea/

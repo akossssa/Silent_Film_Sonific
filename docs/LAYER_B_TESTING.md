@@ -8,9 +8,13 @@ Layer B must not generate sound and must not expose raw video features directly 
 
 - `schemas/SFS_MUSICAL_CONTROL.schema.json` documents the Layer B output contract.
 - `devtools/testdata/layer_b/interpretation_mvp_sequences.json` contains deterministic input sequences and expected assertions.
-- Future production implementation target: `patchers/sfs.interpretation.state_machine.maxpat`.
-- Future production JavaScript target, if needed: `patchers/sfs.interpretation.state_machine.js`.
-- Future devtools targets: `devtools/max/sfs.interpretation.state_machine.test.maxpat` and `devtools/max/sfs.interpretation.state_machine.selftest.maxpat`.
+- `patchers/sfs.interpretation.state_machine.maxpat` is the Layer B abstraction.
+- `patchers/sfs.interpretation.state_machine.js` computes the deterministic MVP state-machine interpretation.
+- `devtools/max/sfs.validate_musical_control.js` validates the output dictionary contract inside Max.
+- `devtools/max/sfs.interpretation.state_machine.selftest.maxpat` runs the fixture suite through the production Max JS.
+- `devtools/max/sfs.layer_ab.integration.selftest.maxpat` runs generated video matrices through Layer A and Layer B.
+- `devtools/max/sfs.layer_ab.manual_test.maxpat` is the interactive movie/camera Layer A -> Layer B test patch.
+- `tools/run_layer_b_selftest.js` runs the same fixture suite through the production JS from Node.
 
 ## Test Approach
 
@@ -50,6 +54,25 @@ Each case provides:
 - special event-frame assertions when a cut is present
 
 Expected controls are ranges, not exact values. Smoothing, thresholds, and mapping curves are implementation details as long as behavior stays within the musical contract.
+
+Run the fixture suite from PowerShell with:
+
+```powershell
+node tools\run_layer_b_selftest.js
+```
+
+Passing output looks like:
+
+```text
+SFS Layer B self-test pass: 10 passed, 0 failed
+```
+
+The runner writes:
+
+```text
+logs/tests/layer_b_selftest.latest.json
+logs/tests/layer_b_selftest.jsonl
+```
 
 ### 3. Temporal Behavior Tests
 
@@ -94,6 +117,31 @@ Incorrect boundary:
 Layer B reads video matrices, jit textures, movie state, MIDI, audio, or Layer C internals
 ```
 
+For automated Layer A + Layer B integration, open:
+
+```text
+devtools/max/sfs.layer_ab.integration.selftest.maxpat
+```
+
+The integration self-test writes:
+
+```text
+logs/tests/layer_ab_integration.latest.json
+logs/tests/layer_ab_integration.jsonl
+```
+
+For manual movie or camera testing, open:
+
+```text
+devtools/max/sfs.layer_ab.manual_test.maxpat
+```
+
+The manual patch previews the selected video source, sends the selected matrix through Layer A and then Layer B, validates both contracts, and displays the current `SFS_MUSICAL_CONTROL` state, controls, and event toggles.
+
+For responsive playback, preview runs at approximately 30 Hz while analysis uses a cached `320 x 180` matrix at 10 Hz. Only the selected movie or camera source is clocked. Debug snapshots are limited to once per second and routine info diagnostics are suppressed in this performance-oriented manual patch.
+
+The movie source uses the VIDDLL engine with `cache_size 0.02` (approximately 20 MB) and `unique 1`. This avoids the large decoded-frame cache allowed by Max's global VIDDLL preference. Click `unload movie` when the file is no longer needed to send `dispose` and release its decoder resources.
+
 ## Fixture Cases
 
 | Case | Purpose | Main Expected Result |
@@ -116,6 +164,18 @@ Layer B test preparation is ready when:
 - fixture cases cover all MVP states
 - fixture cases cover smoothing, hysteresis, event one-shots, optional zones, and invalid input
 - project validation passes
+
+Open this patch to run the Max self-test:
+
+```text
+devtools/max/sfs.interpretation.state_machine.selftest.maxpat
+```
+
+For repeat automated launches from Codex or PowerShell while the main self-test patch is already open in Max, open:
+
+```text
+devtools/max/sfs.interpretation.state_machine.selftest.runner.maxpat
+```
 
 Layer B implementation is ready when a self-test runner can process the fixture file and write:
 
