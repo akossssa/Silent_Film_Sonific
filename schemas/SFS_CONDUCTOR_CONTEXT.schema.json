@@ -1,0 +1,324 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_CONDUCTOR_CONTEXT.schema.json",
+  "title": "SFS_CONDUCTOR_CONTEXT",
+  "type": "object",
+  "x-sfs-invariants": [
+    "density_min <= density_max",
+    "velocity_min <= velocity_max",
+    "octave_min <= octave_max"
+  ],
+  "required": [
+    "schema",
+    "version",
+    "timestamp_ms",
+    "transport",
+    "source_state",
+    "state",
+    "state_fallback_applied",
+    "section",
+    "sections_enabled",
+    "section_progress",
+    "tempo_bpm",
+    "energy",
+    "density",
+    "tension",
+    "brightness",
+    "activity",
+    "control_variation",
+    "variation_amount",
+    "effective_variation",
+    "transition",
+    "accent",
+    "reset_phrase",
+    "event_counts",
+    "root_pitch_class",
+    "scale_name",
+    "harmonic_risk",
+    "dissonance_bias",
+    "randomness",
+    "mutation_rate",
+    "density_min",
+    "density_max",
+    "max_polyphony",
+    "midi_channel",
+    "velocity_min",
+    "velocity_max",
+    "octave_min",
+    "octave_max",
+    "deterministic_mode",
+    "seed"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_CONDUCTOR_CONTEXT"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "timestamp_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "transport": {
+      "type": "object",
+      "required": ["tick_index", "logical_time_us", "tick_duration_us", "beat", "bar", "subdivision", "phrase_tick", "state_age_ticks", "section_tick"],
+      "properties": {
+        "tick_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "logical_time_us": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tick_duration_us": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "beat": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "bar": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "subdivision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "phrase_tick": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "state_age_ticks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "section_tick": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "source_state": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": ["calm", "tension", "action", "chaos"]
+    },
+    "state_fallback_applied": {
+      "type": "boolean"
+    },
+    "section": {
+      "enum": ["disabled", "intro", "develop", "peak", "release"]
+    },
+    "sections_enabled": {
+      "type": "boolean"
+    },
+    "section_progress": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "tempo_bpm": {
+      "type": "number",
+      "minimum": 20,
+      "maximum": 300
+    },
+    "energy": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "density": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "tension": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "brightness": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "activity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "control_variation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "variation_amount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "effective_variation": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "transition": {
+      "type": "boolean"
+    },
+    "accent": {
+      "type": "boolean"
+    },
+    "reset_phrase": {
+      "type": "boolean"
+    },
+    "event_counts": {
+      "type": "object",
+      "required": ["scene_change", "accent", "reset_phrase"],
+      "properties": {
+        "scene_change": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "accent": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reset_phrase": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "root_pitch_class": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 11
+    },
+    "scale_name": {
+      "enum": ["major", "natural_minor", "dorian", "phrygian", "whole_tone", "chromatic", "cluster"]
+    },
+    "harmonic_risk": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "dissonance_bias": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "rhythm_complexity": false,
+    "syncopation": false,
+    "polyrhythm_amount": false,
+    "randomness": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "repetition": false,
+    "memory_length": false,
+    "mutation_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "density_min": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "density_max": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "max_polyphony": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 64
+    },
+    "midi_channel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+    },
+    "velocity_min": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 127
+    },
+    "velocity_max": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 127
+    },
+    "octave_min": {
+      "type": "integer",
+      "minimum": -1,
+      "maximum": 9
+    },
+    "octave_max": {
+      "type": "integer",
+      "minimum": -1,
+      "maximum": 9
+    },
+    "deterministic_mode": {
+      "type": "boolean"
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "source_state": { "const": "calm" },
+        "state": { "const": "calm" },
+        "state_fallback_applied": { "const": false }
+      }
+    },
+    {
+      "properties": {
+        "source_state": { "const": "tension" },
+        "state": { "const": "tension" },
+        "state_fallback_applied": { "const": false }
+      }
+    },
+    {
+      "properties": {
+        "source_state": { "const": "action" },
+        "state": { "const": "action" },
+        "state_fallback_applied": { "const": false }
+      }
+    },
+    {
+      "properties": {
+        "source_state": { "const": "chaos" },
+        "state": { "const": "chaos" },
+        "state_fallback_applied": { "const": false }
+      }
+    },
+    {
+      "properties": {
+        "source_state": {
+          "not": {
+            "enum": ["calm", "tension", "action", "chaos"]
+          }
+        },
+        "state": { "const": "calm" },
+        "state_fallback_applied": { "const": true }
+      }
+    }
+  ],
+  "additionalProperties": true
+}

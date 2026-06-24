@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_HARMONY_CONTEXT.schema.json",
+  "title": "SFS_HARMONY_CONTEXT",
+  "type": "object",
+  "x-sfs-invariants": [
+    "register_min <= register_max",
+    "dissonance == round6(clamp(0.85 * interval_dissonance(chord) + 0.15 * borrowed_chord_ratio(chord, root_pitch_class, scale_intervals), 0, 1))"
+  ],
+  "x-sfs-calculations": {
+    "dissonance": "Deterministic interval-tension metric calculated from unique chord pitch classes only. Pair interval-class weights are 0:0.00, 1:1.00, 2:0.65, 3:0.25, 4:0.20, 5:0.10, 6:0.90. Borrowed chord ratio is the fraction of unique chord pitch classes outside root_pitch_class + scale_intervals modulo 12. Final value is round6(clamp(0.85 * average_pair_weight + 0.15 * borrowed_chord_ratio, 0, 1))."
+  },
+  "required": [
+    "schema",
+    "version",
+    "timestamp_ms",
+    "tick_index",
+    "root_pitch_class",
+    "scale_name",
+    "scale_intervals",
+    "borrowed_pitch_classes",
+    "chord",
+    "pitch_pool",
+    "dissonance",
+    "register_min",
+    "register_max"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_HARMONY_CONTEXT"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "timestamp_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tick_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "root_pitch_class": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 11
+    },
+    "scale_name": {
+      "enum": ["major", "natural_minor", "dorian", "phrygian", "whole_tone", "chromatic", "cluster"]
+    },
+    "scale_intervals": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 11
+      }
+    },
+    "borrowed_pitch_classes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 11
+      }
+    },
+    "chord": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 127
+      }
+    },
+    "pitch_pool": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 127
+      }
+    },
+    "dissonance": {
+      "description": "Deterministic interval-tension metric calculated from the emitted chord; see x-sfs-calculations.dissonance.",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "register_min": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    },
+    "register_max": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    }
+  },
+  "additionalProperties": true
+}

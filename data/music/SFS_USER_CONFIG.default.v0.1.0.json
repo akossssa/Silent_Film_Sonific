@@ -1,0 +1,39 @@
+{
+  "schema": "SFS_USER_CONFIG",
+  "version": "0.1.0",
+  "preset_name": "Default",
+  "reproducibility": {
+    "deterministic_mode": true,
+    "random_seed": 12345
+  },
+  "musical_identity": {
+    "root_pitch_class": 0,
+    "scale_name": "natural_minor",
+    "harmonic_risk": 0.7,
+    "dissonance_bias": 0.4
+  },
+  "rhythm": {
+    "tempo_min": 50,
+    "tempo_max": 160
+  },
+  "generation": {
+    "randomness": 0.4,
+    "variation_amount": 0.5,
+    "mutation_rate": 0.25
+  },
+  "structure": {
+    "sections_enabled": true
+  },
+  "density": {
+    "density_min": 0.05,
+    "density_max": 0.9,
+    "max_polyphony": 4
+  },
+  "midi": {
+    "midi_channel": 1,
+    "velocity_min": 35,
+    "velocity_max": 110,
+    "octave_min": 3,
+    "octave_max": 6
+  }
+}

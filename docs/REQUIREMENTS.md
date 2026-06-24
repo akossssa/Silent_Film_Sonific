@@ -99,7 +99,7 @@ Layer B — Interpretation
 ↓
 Layer C — Music Engine
 ↓
-Audio / MIDI / OSC / Render Output
+Audio / MIDI / CV / OSC / Render Output
 ```
 
 Suggested Max abstraction naming:
@@ -258,10 +258,13 @@ Supported outputs:
 
 - Audio
 - MIDI
+- CV
 - OSC
 - Plugin automation
 - External synthesizer control
 - Recorded audio files
+
+A Layer C implementation may support one output type or any combination of output types. An implementation is not required to generate audio, MIDI, and CV simultaneously.
 
 ---
 
@@ -384,7 +387,7 @@ Layer A must not output musical states, emotions, or performance decisions.
 | Field | Type | Range / Values | Required | Description |
 |---|---|---:|---|---|
 | `schema` | string | `SFS_VIDEO_FEATURES` | yes | Schema identifier |
-| `version` | string | semantic version | yes | Schema version |
+| `version` | string | `0.1.0` | yes | Contract version |
 | `timestamp_ms` | integer | `>= 0` | yes | Timestamp in milliseconds |
 | `source.type` | string | `movie`, `camera`, `stream`, `matrix`, `texture`, `unknown` | yes | Input source type |
 | `source.name` | string / null | any | yes | File name, device name, or null |
@@ -506,7 +509,7 @@ Layer C must use this dictionary as its main control input.
 | Field | Type | Range / Values | Required | Description |
 |---|---|---:|---|---|
 | `schema` | string | `SFS_MUSICAL_CONTROL` | yes | Schema identifier |
-| `version` | string | semantic version | yes | Schema version |
+| `version` | string | `0.1.0` | yes | Contract version |
 | `timestamp_ms` | integer | `>= 0` | yes | Timestamp in milliseconds |
 | `state.name` | string | `calm`, `tension`, `action`, `chaos`, or custom | yes | Current musical state |
 | `state.confidence` | number | `0.0–1.0` | yes | Confidence of current state |
@@ -571,9 +574,12 @@ The first functional version must support the following features.
 ### 10.3 Music Engine MVP
 
 - Receive `SFS_MUSICAL_CONTROL`
-- Generate basic audio output
-- Generate MIDI output
-- Support external MIDI device control
+- Generate at least one primary output type:
+  - Audio
+  - MIDI
+  - CV
+- May generate any combination of audio, MIDI, and CV
+- Expose a documented output interface for each implemented output type
 - Respond to:
   - energy
   - density

@@ -1,0 +1,128 @@
+{
+  "schema": "SFS_LAYER_C_MVP_FIXTURES",
+  "version": "0.1.0",
+  "controls": {
+    "calm": {
+      "schema": "SFS_MUSICAL_CONTROL",
+      "version": "0.1.0",
+      "timestamp_ms": 0,
+      "state": {
+        "name": "calm",
+        "confidence": 1,
+        "changed": false,
+        "previous": null
+      },
+      "controls": {
+        "energy": 0.35,
+        "density": 0.35,
+        "tension": 0.2,
+        "brightness": 0.45,
+        "activity": 0.3,
+        "variation": 0.2
+      },
+      "events": {
+        "scene_change": false,
+        "accent": false,
+        "reset_phrase": false
+      }
+    },
+    "tension": {
+      "schema": "SFS_MUSICAL_CONTROL",
+      "version": "0.1.0",
+      "timestamp_ms": 0,
+      "state": {
+        "name": "tension",
+        "confidence": 1,
+        "changed": true,
+        "previous": "calm"
+      },
+      "controls": {
+        "energy": 0.5,
+        "density": 0.5,
+        "tension": 0.7,
+        "brightness": 0.4,
+        "activity": 0.5,
+        "variation": 0.45
+      },
+      "events": {
+        "scene_change": false,
+        "accent": false,
+        "reset_phrase": false
+      }
+    },
+    "action": {
+      "schema": "SFS_MUSICAL_CONTROL",
+      "version": "0.1.0",
+      "timestamp_ms": 0,
+      "state": {
+        "name": "action",
+        "confidence": 1,
+        "changed": true,
+        "previous": "tension"
+      },
+      "controls": {
+        "energy": 0.72,
+        "density": 0.64,
+        "tension": 0.58,
+        "brightness": 0.55,
+        "activity": 0.77,
+        "variation": 0.39
+      },
+      "events": {
+        "scene_change": false,
+        "accent": false,
+        "reset_phrase": false
+      }
+    },
+    "chaos": {
+      "schema": "SFS_MUSICAL_CONTROL",
+      "version": "0.1.0",
+      "timestamp_ms": 0,
+      "state": {
+        "name": "chaos",
+        "confidence": 1,
+        "changed": true,
+        "previous": "action"
+      },
+      "controls": {
+        "energy": 0.9,
+        "density": 0.85,
+        "tension": 0.9,
+        "brightness": 0.65,
+        "activity": 0.9,
+        "variation": 0.8
+      },
+      "events": {
+        "scene_change": false,
+        "accent": false,
+        "reset_phrase": false
+      }
+    },
+    "mystery": {
+      "schema": "SFS_MUSICAL_CONTROL",
+      "version": "0.1.0",
+      "timestamp_ms": 0,
+      "state": {
+        "name": "mystery",
+        "confidence": 1,
+        "changed": true,
+        "previous": "calm"
+      },
+      "controls": {
+        "energy": 0.35,
+        "density": 0.35,
+        "tension": 0.2,
+        "brightness": 0.45,
+        "activity": 0.3,
+        "variation": 0.2
+      },
+      "events": {
+        "scene_change": false,
+        "accent": false,
+        "reset_phrase": false
+      }
+    }
+  },
+  "event_tick": 128,
+  "run_ticks": 256
+}

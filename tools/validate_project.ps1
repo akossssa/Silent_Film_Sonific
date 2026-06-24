@@ -7,6 +7,7 @@ $Root = Split-Path -Parent $PSScriptRoot
 $PatchersDir = Join-Path $Root "patchers"
 $DevtoolsMaxDir = Join-Path $Root "devtools/max"
 $TestdataDir = Join-Path $Root "devtools/testdata"
+$DataDir = Join-Path $Root "data"
 $SchemasDir = Join-Path $Root "schemas"
 $ToolsDir = Join-Path $Root "tools"
 $MaxSourceDirs = @($PatchersDir, $DevtoolsMaxDir)
@@ -75,6 +76,7 @@ $RequiredDirs = @(
     "patchers",
     "devtools/max",
     "devtools/testdata",
+    "data/music",
     "schemas",
     "logs/max",
     "logs/tests",
@@ -85,6 +87,18 @@ foreach ($Dir in $RequiredDirs) {
     $FullPath = Join-Path $Root $Dir
     if (-not (Test-Path -LiteralPath $FullPath -PathType Container)) {
         Add-Failure "Missing required directory: $Dir"
+    }
+}
+
+$RequiredFiles = @(
+    "data/music/SFS_SCALE_REGISTRY.v0.1.0.json",
+    "data/music/SFS_USER_CONFIG.default.v0.1.0.json"
+)
+
+foreach ($File in $RequiredFiles) {
+    $FullPath = Join-Path $Root $File
+    if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
+        Add-Failure "Missing required production data file: $File"
     }
 }
 
@@ -167,6 +181,15 @@ foreach ($File in $TestdataJsonFiles) {
     [void](Read-JsonFile $File)
 }
 
+$DataJsonFiles = @()
+if (Test-Path -LiteralPath $DataDir -PathType Container) {
+    $DataJsonFiles = @(Get-ChildItem -LiteralPath $DataDir -Recurse -Filter *.json -File)
+}
+
+foreach ($File in $DataJsonFiles) {
+    [void](Read-JsonFile $File)
+}
+
 $JsFiles = @()
 foreach ($Dir in $JsSourceDirs) {
     if (Test-Path -LiteralPath $Dir -PathType Container) {
@@ -203,6 +226,7 @@ Write-Host "Patchers: $($MaxpatFiles.Count)"
 Write-Host "Schemas:  $($SchemaFiles.Count)"
 Write-Host "Scripts:  $($JsFiles.Count)"
 Write-Host "Test data JSON: $($TestdataJsonFiles.Count)"
+Write-Host "Production data JSON: $($DataJsonFiles.Count)"
 Write-Host ""
 
 if ($Warnings.Count -gt 0) {

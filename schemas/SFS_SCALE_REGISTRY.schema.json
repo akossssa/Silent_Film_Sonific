@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_SCALE_REGISTRY.schema.json",
+  "title": "SFS_SCALE_REGISTRY",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "interval_unit",
+    "octave_size",
+    "default_scale_name",
+    "scale_order",
+    "scales"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_SCALE_REGISTRY"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "interval_unit": {
+      "const": "semitones"
+    },
+    "octave_size": {
+      "const": 12
+    },
+    "default_scale_name": {
+      "const": "natural_minor"
+    },
+    "scale_order": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["major", "natural_minor", "dorian", "phrygian", "whole_tone", "chromatic", "cluster"]
+      }
+    },
+    "scales": {
+      "type": "object",
+      "required": ["major", "natural_minor", "dorian", "phrygian", "whole_tone", "chromatic", "cluster"],
+      "properties": {
+        "major": { "$ref": "#/$defs/scale" },
+        "natural_minor": { "$ref": "#/$defs/scale" },
+        "dorian": { "$ref": "#/$defs/scale" },
+        "phrygian": { "$ref": "#/$defs/scale" },
+        "whole_tone": { "$ref": "#/$defs/scale" },
+        "chromatic": { "$ref": "#/$defs/scale" },
+        "cluster": { "$ref": "#/$defs/scale" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "scale": {
+      "type": "object",
+      "required": ["display_name", "intervals", "description"],
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intervals": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "contains": {
+            "const": 0
+          },
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          }
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

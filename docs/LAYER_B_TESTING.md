@@ -130,6 +130,25 @@ logs/tests/layer_ab_integration.latest.json
 logs/tests/layer_ab_integration.jsonl
 ```
 
+For automated Layer A + Layer B + Layer C integration, open:
+
+```text
+devtools/max/sfs.layer_abc.integration.selftest.maxpat
+```
+
+The full-pipeline self-test uses generated Jitter matrices, production Layer A,
+production Layer B, and the production Layer C core. It writes:
+
+```text
+logs/tests/layer_abc_integration.latest.json
+logs/tests/layer_abc_integration.jsonl
+```
+
+It verifies `SFS_VIDEO_FEATURES`, `SFS_MUSICAL_CONTROL`,
+`SFS_CONDUCTOR_CONTEXT`, `SFS_HARMONY_CONTEXT`, `SFS_NOTE_EVENT`, and
+`SFS_MIDI_EVENT` at the layer boundaries, plus a small set of end-to-end
+musical/MIDI assertions.
+
 For manual movie or camera testing, open:
 
 ```text
@@ -137,6 +156,14 @@ devtools/max/sfs.layer_ab.manual_test.maxpat
 ```
 
 The manual patch previews the selected video source, sends the selected matrix through Layer A and then Layer B, validates both contracts, and displays the current `SFS_MUSICAL_CONTROL` state, controls, and event toggles.
+
+For manual full-pipeline movie or camera testing, open:
+
+```text
+devtools/max/sfs.layer_abc.manual_test.maxpat
+```
+
+The full-pipeline manual patch keeps the same source and analysis controls, sends valid `SFS_MUSICAL_CONTROL` dictionaries into the Layer C music-engine core, advances one Layer C logical tick per valid Layer B output, and displays Conductor, Harmony, Note, MIDI event, and raw MIDI-byte summaries. Raw MIDI bytes are also routed to a visible `midiout` object for the current Max MIDI output destination.
 
 For responsive playback, preview runs at approximately 30 Hz while analysis uses a cached `320 x 180` matrix at 10 Hz. Only the selected movie or camera source is clocked. Debug snapshots are limited to once per second and routine info diagnostics are suppressed in this performance-oriented manual patch.
 

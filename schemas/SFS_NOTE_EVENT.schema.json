@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_NOTE_EVENT.schema.json",
+  "title": "SFS_NOTE_EVENT",
+  "type": "object",
+  "x-sfs-invariants": [
+    "event_index is a global monotonically increasing note-event index that starts at 0 after full reset and is never reused in a run",
+    "note_id == 'note:' + event_index",
+    "same-tick SFS_NOTE_EVENT values are processed in ascending event_index order"
+  ],
+  "required": [
+    "schema",
+    "version",
+    "timestamp_ms",
+    "tick_index",
+    "event_index",
+    "note_id",
+    "pitch",
+    "velocity",
+    "duration_ticks",
+    "duration_ms",
+    "channel",
+    "role"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_NOTE_EVENT"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "timestamp_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tick_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "note_id": {
+      "type": "string",
+      "pattern": "^note:[0-9]+$"
+    },
+    "pitch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    },
+    "velocity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 127
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "duration_ticks": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "channel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+    },
+    "role": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true
+}

@@ -14,12 +14,14 @@ Use this skill to keep Silent Film Sonific changes aligned with the repository l
 - Keep `patchers/` production-only: production Max abstractions and production JavaScript.
 - Keep testing, debugging, validation, and console-capture Max assets in `devtools/max/`.
 - Keep generated runtime files out of Git; only `.gitkeep` files under `logs/` should be tracked.
+- Keep versioned production registries and static runtime data under `data/`.
 - Do not move generated logs, reports, or snapshots into docs or source folders.
 - Update documentation when layout, workflow, schemas, or test commands change.
 
 ## Layout
 
 - `patchers/`: production Max patchers and JavaScript.
+- `data/`: versioned production registries and static runtime data.
 - `devtools/max/`: test harnesses, self-tests, console capture, logger, and validators.
 - `docs/`: requirements and workflows.
 - `schemas/`: schema contracts.

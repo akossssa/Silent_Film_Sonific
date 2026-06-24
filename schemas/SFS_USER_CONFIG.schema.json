@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_USER_CONFIG.schema.json",
+  "title": "SFS_USER_CONFIG",
+  "type": "object",
+  "x-sfs-invariants": [
+    "rhythm.tempo_min <= rhythm.tempo_max",
+    "density.density_min <= density.density_max",
+    "midi.velocity_min <= midi.velocity_max",
+    "midi.octave_min <= midi.octave_max"
+  ],
+  "required": [
+    "schema",
+    "version",
+    "preset_name",
+    "reproducibility",
+    "musical_identity",
+    "rhythm",
+    "generation",
+    "structure",
+    "density",
+    "midi"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_USER_CONFIG"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "preset_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reproducibility": {
+      "type": "object",
+      "required": ["deterministic_mode", "random_seed"],
+      "properties": {
+        "deterministic_mode": {
+          "type": "boolean"
+        },
+        "random_seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "additionalProperties": true
+    },
+    "musical_identity": {
+      "type": "object",
+      "required": ["root_pitch_class", "scale_name", "harmonic_risk", "dissonance_bias"],
+      "properties": {
+        "root_pitch_class": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "scale_name": {
+          "enum": ["major", "natural_minor", "dorian", "phrygian", "whole_tone", "chromatic", "cluster"]
+        },
+        "harmonic_risk": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "dissonance_bias": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "rhythm": {
+      "type": "object",
+      "required": ["tempo_min", "tempo_max"],
+      "properties": {
+        "tempo_min": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 300
+        },
+        "tempo_max": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 300
+        },
+        "rhythm_complexity": false,
+        "syncopation": false,
+        "polyrhythm_amount": false
+      },
+      "additionalProperties": true
+    },
+    "generation": {
+      "type": "object",
+      "required": ["randomness", "variation_amount", "mutation_rate"],
+      "properties": {
+        "randomness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "variation_amount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "repetition": false,
+        "memory_length": false,
+        "mutation_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "structure": {
+      "type": "object",
+      "required": ["sections_enabled"],
+      "properties": {
+        "sections_enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "density": {
+      "type": "object",
+      "required": ["density_min", "density_max", "max_polyphony"],
+      "properties": {
+        "density_min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "density_max": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max_polyphony": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        }
+      },
+      "additionalProperties": true
+    },
+    "midi": {
+      "type": "object",
+      "required": ["midi_channel", "velocity_min", "velocity_max", "octave_min", "octave_max"],
+      "properties": {
+        "midi_channel": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "velocity_min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 127
+        },
+        "velocity_max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 127
+        },
+        "octave_min": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 9
+        },
+        "octave_max": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 9
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://silent-film-sonific.local/schemas/SFS_MIDI_EVENT.schema.json",
+  "title": "SFS_MIDI_EVENT",
+  "type": "object",
+  "x-sfs-invariants": [
+    "midi_event_index is a monotonically increasing lifecycle-event index that starts at 0 after full reset",
+    "note_id values use the canonical 'note:<event_index>' format",
+    "replacement_note_id values use the canonical 'note:<event_index>' format",
+    "lifecycle events for same-tick note events are emitted according to the documented MIDI lifecycle ordering contract",
+    "MIDI CC 120 All Sound Off is outside the MVP and must not appear in SFS_MIDI_EVENT v0.1.0"
+  ],
+  "required": [
+    "schema",
+    "version",
+    "timestamp_ms",
+    "tick_index",
+    "midi_event_index",
+    "source_event_index",
+    "input_sequence",
+    "type",
+    "reason",
+    "active_voice_count"
+  ],
+  "properties": {
+    "schema": {
+      "const": "SFS_MIDI_EVENT"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "timestamp_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tick_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "midi_event_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_event_index": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "input_sequence": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "type": {
+      "enum": ["note_on", "note_off", "control_change", "voice_steal", "flush", "panic"]
+    },
+    "reason": {
+      "enum": [
+        "generated",
+        "duration_elapsed",
+        "retrigger",
+        "voice_steal",
+        "reset_phrase",
+        "stop",
+        "global_disable",
+        "full_reset",
+        "channel_change",
+        "patch_shutdown",
+        "user_flush",
+        "user_panic"
+      ]
+    },
+    "active_voice_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "note_id": {
+      "type": "string",
+      "pattern": "^note:[0-9]+$"
+    },
+    "replacement_note_id": {
+      "type": "string",
+      "pattern": "^note:[0-9]+$"
+    },
+    "pitch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    },
+    "velocity": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    },
+    "channel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 16
+    },
+    "controller": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127,
+      "not": {
+        "const": 120
+      }
+    },
+    "value": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 127
+    },
+    "released_note_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^note:[0-9]+$"
+      }
+    },
+    "used_channels": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 16
+      }
+    },
+    "cc120_sent": false
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "note_on" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["note_id", "pitch", "velocity", "channel"],
+        "properties": {
+          "velocity": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 127
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "note_off" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["note_id", "pitch", "velocity", "channel"],
+        "properties": {
+          "velocity": {
+            "const": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "control_change" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["channel", "controller", "value"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "voice_steal" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["note_id", "replacement_note_id", "pitch", "channel"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "flush" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["released_note_ids"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": { "const": "panic" }
+        },
+        "required": ["type"]
+      },
+      "then": {
+        "required": ["released_note_ids", "used_channels"]
+      }
+    }
+  ],
+  "additionalProperties": true
+}

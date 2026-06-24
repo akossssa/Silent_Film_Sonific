@@ -9,7 +9,7 @@
       "const": "SFS_VIDEO_FEATURES"
     },
     "version": {
-      "type": "string"
+      "const": "0.1.0"
     },
     "timestamp_ms": {
       "type": "integer",
