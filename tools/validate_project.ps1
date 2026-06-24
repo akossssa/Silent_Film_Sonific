@@ -91,8 +91,8 @@ foreach ($Dir in $RequiredDirs) {
 }
 
 $RequiredFiles = @(
-    "data/music/SFS_SCALE_REGISTRY.v0.1.0.json",
-    "data/music/SFS_USER_CONFIG.default.v0.1.0.json"
+    "data/music/SFS_SCALE_REGISTRY.deterministic_midi.v0.1.0.json",
+    "data/music/SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json"
 )
 
 foreach ($File in $RequiredFiles) {

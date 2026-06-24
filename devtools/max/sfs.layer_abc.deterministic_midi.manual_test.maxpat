@@ -31,7 +31,7 @@
         "enablehscroll": 1,
         "enablevscroll": 1,
         "devicewidth": 0.0,
-        "description": "Manual Layer A to Layer B to Layer C test patch with movie/camera source selection",
+        "description": "Manual Layer A to Layer B to Deterministic MIDI Engine test patch with movie/camera source selection",
         "digest": "",
         "tags": "sfs,test,manual,video,interpretation,music-engine",
         "style": "",
@@ -42,7 +42,7 @@
                 "box": {
                     "id": "obj-1",
                     "maxclass": "comment",
-                    "text": "Layer A -> Layer B -> Layer C Manual Test",
+                    "text": "Layer A -> Layer B -> Deterministic MIDI Manual Test",
                     "patching_rect": [30.0, 20.0, 420.0, 20.0]
                 }
             },
@@ -50,7 +50,7 @@
                 "box": {
                     "id": "obj-2",
                     "maxclass": "comment",
-                    "text": "Select movie or camera. The selected video is previewed, analyzed by Layer A, interpreted by Layer B, stepped through Layer C, and logged to project logs.",
+                    "text": "Select movie or camera. The selected video is previewed, analyzed by Layer A, interpreted by Layer B, stepped through the Deterministic MIDI Engine, and logged to project logs.",
                     "patching_rect": [30.0, 45.0, 1030.0, 20.0]
                 }
             },
@@ -599,7 +599,7 @@
                 "box": {
                     "id": "obj-73",
                     "maxclass": "newobj",
-                    "text": "js sfs.debug.logger.js sfs.layer_abc.manual.video",
+                    "text": "js sfs.debug.logger.js sfs.layer_abc.deterministic_midi.manual.video",
                     "patching_rect": [560.0, 610.0, 310.0, 22.0]
                 }
             },
@@ -607,7 +607,7 @@
                 "box": {
                     "id": "obj-74",
                     "maxclass": "newobj",
-                    "text": "js sfs.debug.logger.js sfs.layer_abc.manual.music",
+                    "text": "js sfs.debug.logger.js sfs.layer_abc.deterministic_midi.manual.music",
                     "patching_rect": [900.0, 610.0, 310.0, 22.0]
                 }
             },
@@ -809,7 +809,7 @@
                 "box": {
                     "id": "obj-99",
                     "maxclass": "comment",
-                    "text": "Layer C: SFS Music Engine MVP",
+                    "text": "Layer C: Deterministic MIDI Engine",
                     "patching_rect": [1320.0, 145.0, 300.0, 20.0]
                 }
             },
@@ -817,7 +817,7 @@
                 "box": {
                     "id": "obj-100",
                     "maxclass": "newobj",
-                    "text": "js sfs.music_engine.step_adapter.js",
+                    "text": "js sfs.music_engine.deterministic_midi.step_adapter.js",
                     "patching_rect": [1320.0, 175.0, 245.0, 22.0]
                 }
             },
@@ -825,7 +825,7 @@
                 "box": {
                     "id": "obj-101",
                     "maxclass": "newobj",
-                    "text": "js D:/tmp/sfs_project/patchers/sfs.music_engine.core.basic.js",
+                    "text": "js D:/tmp/sfs_project/patchers/sfs.music_engine.core.deterministic_midi.js",
                     "patching_rect": [1320.0, 210.0, 420.0, 22.0]
                 }
             },
@@ -833,7 +833,7 @@
                 "box": {
                     "id": "obj-102",
                     "maxclass": "newobj",
-                    "text": "js sfs.music_engine.monitor.js",
+                    "text": "js sfs.music_engine.deterministic_midi.monitor.js",
                     "patching_rect": [1320.0, 250.0, 225.0, 22.0]
                 }
             },
@@ -841,7 +841,7 @@
                 "box": {
                     "id": "obj-103",
                     "maxclass": "newobj",
-                    "text": "js sfs.debug.logger.js sfs.layer_abc.manual.music_engine",
+                    "text": "js sfs.debug.logger.js sfs.layer_abc.deterministic_midi.manual.music_engine",
                     "patching_rect": [1320.0, 810.0, 365.0, 22.0]
                 }
             },
@@ -849,7 +849,7 @@
                 "box": {
                     "id": "obj-104",
                     "maxclass": "newobj",
-                    "text": "print sfs.layer_abc.manual.music_engine",
+                    "text": "print sfs.layer_abc.deterministic_midi.manual.music_engine",
                     "patching_rect": [1585.0, 250.0, 255.0, 22.0]
                 }
             },
@@ -913,7 +913,7 @@
                 "box": {
                     "id": "obj-112",
                     "maxclass": "comment",
-                    "text": "Layer C controls",
+                    "text": "Deterministic MIDI controls",
                     "patching_rect": [1320.0, 108.0, 160.0, 20.0]
                 }
             },

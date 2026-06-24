@@ -31,7 +31,7 @@
         "enablehscroll": 1,
         "enablevscroll": 1,
         "devicewidth": 0.0,
-        "description": "Layer A to Layer B to Layer C integration self-test",
+        "description": "Layer A to Layer B to Layer C integration self-test runner",
         "digest": "",
         "tags": "sfs,test,integration,video,interpretation,music-engine",
         "style": "",
@@ -42,8 +42,8 @@
                 "box": {
                     "id": "obj-1",
                     "maxclass": "comment",
-                    "text": "Layer A -> Layer B -> Layer C Integration Self-Test",
-                    "patching_rect": [35.0, 25.0, 430.0, 20.0]
+                    "text": "Layer A -> Layer B -> Layer C Integration Self-Test Runner",
+                    "patching_rect": [35.0, 25.0, 480.0, 20.0]
                 }
             },
             {
@@ -75,7 +75,7 @@
                 "box": {
                     "id": "obj-5",
                     "maxclass": "newobj",
-                    "text": "js sfs.layer_abc.integration.selftest_driver.js",
+                    "text": "js sfs.layer_abc.deterministic_midi.integration.selftest_driver.js",
                     "patching_rect": [160.0, 155.0, 355.0, 22.0]
                 }
             },
@@ -99,7 +99,7 @@
                 "box": {
                     "id": "obj-8",
                     "maxclass": "newobj",
-                    "text": "js D:/tmp/sfs_project/patchers/sfs.music_engine.core.basic.js",
+                    "text": "js D:/tmp/sfs_project/patchers/sfs.music_engine.core.deterministic_midi.js",
                     "patching_rect": [160.0, 365.0, 420.0, 22.0]
                 }
             },
@@ -107,7 +107,7 @@
                 "box": {
                     "id": "obj-9",
                     "maxclass": "newobj",
-                    "text": "print sfs.layer_abc.integration",
+                    "text": "print sfs.layer_abc.deterministic_midi.integration",
                     "patching_rect": [550.0, 155.0, 220.0, 22.0]
                 }
             },
@@ -115,7 +115,7 @@
                 "box": {
                     "id": "obj-10",
                     "maxclass": "comment",
-                    "text": "Report: logs/tests/layer_abc_integration.latest.json",
+                    "text": "Report: logs/tests/layer_abc_deterministic_midi_integration.latest.json",
                     "patching_rect": [35.0, 465.0, 390.0, 20.0]
                 }
             },
@@ -123,7 +123,7 @@
                 "box": {
                     "id": "obj-11",
                     "maxclass": "comment",
-                    "text": "Append log: logs/tests/layer_abc_integration.jsonl",
+                    "text": "Append log: logs/tests/layer_abc_deterministic_midi_integration.jsonl",
                     "patching_rect": [35.0, 490.0, 370.0, 20.0]
                 }
             },

@@ -32,8 +32,8 @@
         "subpatcher_template": "",
         "assistshowspatchername": 0,
         "boxes": [
-            { "box": { "id": "obj-1", "maxclass": "comment", "text": "Layer C Test Control Source", "patching_rect": [35.0, 25.0, 260.0, 20.0] } },
-            { "box": { "id": "obj-2", "maxclass": "comment", "text": "Generates SFS_MUSICAL_CONTROL dictionaries for testing Layer C without Layers A or B.", "patching_rect": [35.0, 55.0, 610.0, 20.0] } },
+            { "box": { "id": "obj-1", "maxclass": "comment", "text": "Deterministic MIDI Test Control Source", "patching_rect": [35.0, 25.0, 260.0, 20.0] } },
+            { "box": { "id": "obj-2", "maxclass": "comment", "text": "Generates SFS_MUSICAL_CONTROL dictionaries for testing the Deterministic MIDI Engine without Layers A or B.", "patching_rect": [35.0, 55.0, 610.0, 20.0] } },
             { "box": { "id": "obj-3", "maxclass": "message", "text": "calm", "patching_rect": [35.0, 110.0, 60.0, 22.0] } },
             { "box": { "id": "obj-4", "maxclass": "message", "text": "tension", "patching_rect": [105.0, 110.0, 70.0, 22.0] } },
             { "box": { "id": "obj-5", "maxclass": "message", "text": "action", "patching_rect": [185.0, 110.0, 70.0, 22.0] } },
@@ -43,7 +43,7 @@
             { "box": { "id": "obj-9", "maxclass": "message", "text": "accent", "patching_rect": [150.0, 155.0, 70.0, 22.0] } },
             { "box": { "id": "obj-10", "maxclass": "message", "text": "reset_phrase", "patching_rect": [230.0, 155.0, 105.0, 22.0] } },
             { "box": { "id": "obj-11", "maxclass": "message", "text": "events", "patching_rect": [345.0, 155.0, 70.0, 22.0] } },
-            { "box": { "id": "obj-12", "maxclass": "newobj", "text": "js sfs.music_engine.control_source.test.js", "patching_rect": [35.0, 225.0, 310.0, 22.0] } },
+            { "box": { "id": "obj-12", "maxclass": "newobj", "text": "js sfs.music_engine.deterministic_midi.control_source.test.js", "patching_rect": [35.0, 225.0, 310.0, 22.0] } },
             { "box": { "id": "obj-13", "maxclass": "outlet", "comment": "SFS_MUSICAL_CONTROL dictionary", "patching_rect": [35.0, 310.0, 30.0, 30.0] } },
             { "box": { "id": "obj-14", "maxclass": "outlet", "comment": "diagnostics", "patching_rect": [160.0, 310.0, 30.0, 30.0] } }
         ],

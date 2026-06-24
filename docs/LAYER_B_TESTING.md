@@ -133,15 +133,15 @@ logs/tests/layer_ab_integration.jsonl
 For automated Layer A + Layer B + Layer C integration, open:
 
 ```text
-devtools/max/sfs.layer_abc.integration.selftest.maxpat
+devtools/max/sfs.layer_abc.deterministic_midi.integration.selftest.maxpat
 ```
 
 The full-pipeline self-test uses generated Jitter matrices, production Layer A,
 production Layer B, and the production Layer C core. It writes:
 
 ```text
-logs/tests/layer_abc_integration.latest.json
-logs/tests/layer_abc_integration.jsonl
+logs/tests/layer_abc_deterministic_midi_integration.latest.json
+logs/tests/layer_abc_deterministic_midi_integration.jsonl
 ```
 
 It verifies `SFS_VIDEO_FEATURES`, `SFS_MUSICAL_CONTROL`,
@@ -160,7 +160,7 @@ The manual patch previews the selected video source, sends the selected matrix t
 For manual full-pipeline movie or camera testing, open:
 
 ```text
-devtools/max/sfs.layer_abc.manual_test.maxpat
+devtools/max/sfs.layer_abc.deterministic_midi.manual_test.maxpat
 ```
 
 The full-pipeline manual patch keeps the same source and analysis controls, sends valid `SFS_MUSICAL_CONTROL` dictionaries into the Layer C music-engine core, advances one Layer C logical tick per valid Layer B output, and displays Conductor, Harmony, Note, MIDI event, and raw MIDI-byte summaries. Raw MIDI bytes are also routed to a visible `midiout` object for the current Max MIDI output destination.

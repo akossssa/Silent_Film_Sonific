@@ -31,7 +31,7 @@ function emitDictionary(name) {
     try {
         dict = new Dict(name);
     } catch (error) {
-        post("sfs.music_engine.monitor: cannot open dictionary " + name + "\n");
+        post("sfs.music_engine.deterministic_midi.monitor: cannot open dictionary " + name + "\n");
         return;
     }
 

@@ -10,7 +10,7 @@ Layer A is complete as an MVP. It outputs `SFS_VIDEO_FEATURES v0.1.0`: motion, b
 
 Layer B has an MVP deterministic state-machine implementation. It outputs `SFS_MUSICAL_CONTROL v0.1.0` from `SFS_VIDEO_FEATURES` using smoothing, hysteresis, MVP state transitions, and one-shot events.
 
-Layer C is in MVP specification / pre-implementation state. Its main specification is `docs/LAYER_C_MUSIC_ENGINE_MVP.md`. The planned MVP is a MIDI-first algorithmic/generative music engine with User Configuration, Conductor, Harmony, Rhythm, and MIDI Output modules, plus versioned internal schemas and production data under `schemas/` and `data/music/`.
+Layer C has a deterministic MIDI MVP implementation. Its implementation specification is `docs/LAYER_C_DETERMINISTIC_MIDI_MVP.md`. The engine is MIDI-first and algorithmic/generative, with User Configuration, Conductor, Harmony, Rhythm, and MIDI Output modules, plus versioned internal schemas and implementation data under `schemas/` and `data/music/`.
 
 ## Repo Layout
 
@@ -29,7 +29,7 @@ Layer C is in MVP specification / pre-implementation state. Its main specificati
 - For Max/runtime debugging, also read `docs/DEBUGGING.md`.
 - For Layer A work, also read `docs/LAYER_A_TESTING.md`.
 - For Layer B work, also read `docs/LAYER_B_TESTING.md` and `docs/RESEARCH.md`.
-- For Layer C work, also read `docs/LAYER_C_MUSIC_ENGINE_MVP.md` and the relevant Layer C schemas/data in `schemas/` and `data/music/`.
+- For Layer C work, also read `docs/LAYER_C_DETERMINISTIC_MIDI_MVP.md` and the relevant Layer C schemas/data in `schemas/` and `data/music/`.
 - For research or architecture work, also read `docs/RESEARCH.md` and `docs/CODEX_RESEARCH_WORKFLOW.md`.
 - Keep `patchers/` production-only. Do not move test or debug patches back there.
 - Use `tools\setup_dev_paths.ps1` if `D:\tmp\sfs_project` is missing before opening moved devtools Max patches.

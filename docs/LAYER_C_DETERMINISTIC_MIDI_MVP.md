@@ -1,10 +1,10 @@
-# Silent Film Sonific — Layer C Music Engine MVP
+# Silent Film Sonific — Layer C Deterministic MIDI Engine MVP
 
 ## Purpose
 
-This document defines the first MVP implementation of **Layer C — Music Engine** for the Silent Film Sonific project.
+This document defines the **Deterministic MIDI Engine**, the first named MVP implementation of **Layer C — Music Engine** for the Silent Film Sonific project.
 
-Layer C receives abstract musical control data from Layer B and generates algorithmic/generative musical output. For the MVP, Layer C must produce MIDI output using a modular internal architecture.
+The Deterministic MIDI Engine receives abstract musical control data from Layer B and generates algorithmic/generative musical output. For the MVP, this implementation produces MIDI output using a modular internal architecture.
 
 The MVP must include:
 
@@ -66,9 +66,9 @@ Neither Layer B nor User Configuration should directly override the other. Layer
 
 ---
 
-# 3. Layer C MVP Architecture
+# 3. Deterministic MIDI Engine Architecture
 
-Layer C should be implemented as a set of replaceable modules:
+The Deterministic MIDI Engine is implemented as a set of replaceable modules:
 
 ```text
 Layer C — Music Engine
@@ -83,20 +83,20 @@ Layer C — Music Engine
 Suggested Max abstractions:
 
 ```text
-sfs.music_engine.mvp.maxpat
-sfs.music_engine.conductor.basic.maxpat
-sfs.music_engine.harmony.basic.maxpat
-sfs.music_engine.rhythm.basic.maxpat
-sfs.music_engine.midi_output.basic.maxpat
-sfs.music_engine.user_config.basic.maxpat
-sfs.music_engine.clock.logical.maxpat
-sfs.music_engine.core.basic.js
+sfs.music_engine.deterministic_midi.maxpat
+sfs.music_engine.conductor.deterministic_midi.maxpat
+sfs.music_engine.harmony.deterministic_midi.maxpat
+sfs.music_engine.rhythm.deterministic_midi.maxpat
+sfs.music_engine.midi_output.deterministic_midi.maxpat
+sfs.music_engine.user_config.deterministic_midi.maxpat
+sfs.music_engine.clock.deterministic_midi.maxpat
+sfs.music_engine.core.deterministic_midi.js
 ```
 
 The top-level abstraction should be:
 
 ```text
-sfs.music_engine.mvp.maxpat
+sfs.music_engine.deterministic_midi.maxpat
 ```
 
 It should receive `SFS_MUSICAL_CONTROL` dictionaries and route internal control data to the Conductor, Harmony Engine, Rhythm Engine, MIDI Output, and User Configuration modules.
@@ -110,7 +110,7 @@ sfs.music_engine.<module>.<variant>.maxpat
 sfs.music_engine.<module>.<variant>.js
 ```
 
-The top-level MVP abstraction remains the shorter `sfs.music_engine.mvp.maxpat`. Test patches mirror the production namespace under `devtools/max/` and use `.test.maxpat` or `.selftest.maxpat` suffixes.
+The top-level implementation abstraction is `sfs.music_engine.deterministic_midi.maxpat`. Test patches mirror the production namespace under `devtools/max/` and use `.test.maxpat` or `.selftest.maxpat` suffixes.
 
 ## Normative Internal Contracts
 
@@ -132,7 +132,7 @@ Every v0.1.0 schema must enforce its exact `version` value with `const: "0.1.0"`
 The normative production scale registry is:
 
 ```text
-data/music/SFS_SCALE_REGISTRY.v0.1.0.json
+data/music/SFS_SCALE_REGISTRY.deterministic_midi.v0.1.0.json
 ```
 
 It is validated by `schemas/SFS_SCALE_REGISTRY.schema.json`.
@@ -140,7 +140,7 @@ It is validated by `schemas/SFS_SCALE_REGISTRY.schema.json`.
 The normative default Layer C configuration is:
 
 ```text
-data/music/SFS_USER_CONFIG.default.v0.1.0.json
+data/music/SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json
 ```
 
 It must validate against `schemas/SFS_USER_CONFIG.schema.json`. Implementations must load this file rather than maintain a second hard-coded default table in JavaScript or Max patchers.
@@ -343,7 +343,7 @@ They are deferred to a later schema version until they have defined generation s
 Supported MVP `scale_name` values and their interval arrays are defined only in:
 
 ```text
-data/music/SFS_SCALE_REGISTRY.v0.1.0.json
+data/music/SFS_SCALE_REGISTRY.deterministic_midi.v0.1.0.json
 ```
 
 The registry contains exactly seven ordered identifiers: `major`, `natural_minor`, `dorian`, `phrygian`, `whole_tone`, `chromatic`, and `cluster`. Its `default_scale_name` is the fallback for missing or unknown scale identifiers.
@@ -375,7 +375,7 @@ The User Configuration Engine must normalize input before publishing `SFS_USER_C
 The canonical fallback value for every field is the corresponding value in:
 
 ```text
-data/music/SFS_USER_CONFIG.default.v0.1.0.json
+data/music/SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json
 ```
 
 The default file must itself pass schema and cross-field invariant validation before Layer C starts. A missing or invalid default file is a startup error; implementations must not silently substitute code-local defaults.
@@ -635,7 +635,7 @@ action
 chaos
 ```
 
-`SFS_MUSICAL_CONTROL.state.name` may contain a custom Layer B state. The Layer C MVP resolves it into a supported behavior profile using this exact rule:
+`SFS_MUSICAL_CONTROL.state.name` may contain a custom Layer B state. The Deterministic MIDI Engine MVP resolves it into a supported behavior profile using this exact rule:
 
 ```text
 source_state = selected SFS_MUSICAL_CONTROL.state.name
@@ -1220,7 +1220,7 @@ outlet 1: normalized SFS_MIDI_EVENT dictionaries
 outlet 2: raw MIDI 1.0 bytes as individual Max integer messages
 ```
 
-A containing Max patch may route outlet 2 directly to `midiout`, through an adapter for a plugin or network protocol, to a recorder or monitor, or to nothing. That routing is host/session state and is not part of `SFS_USER_CONFIG`, presets, deterministic traces, or Layer C MVP acceptance.
+A containing Max patch may route outlet 2 directly to `midiout`, through an adapter for a plugin or network protocol, to a recorder or monitor, or to nothing. That routing is host/session state and is not part of `SFS_USER_CONFIG`, presets, deterministic traces, or Deterministic MIDI Engine MVP acceptance.
 
 ## Raw MIDI Outlet Contract
 
@@ -1669,10 +1669,10 @@ reset_phrase
 Suggested test abstraction:
 
 ```text
-devtools/max/sfs.music_engine.control_source.test.maxpat
+devtools/max/sfs.music_engine.deterministic_midi.control_source.test.maxpat
 ```
 
-The MVP must load `data/music/SFS_USER_CONFIG.default.v0.1.0.json` so that Layer C can run immediately without user setup.
+The MVP must load `data/music/SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json` so that the Deterministic MIDI Engine can run immediately without user setup.
 
 This allows Codex or the developer to test Layer C independently.
 
@@ -1712,14 +1712,14 @@ Canonical traces use JSON Lines with keys sorted lexicographically and floating-
 Automated fixtures should live in:
 
 ```text
-devtools/testdata/layer_c/music_engine_mvp_sequences.json
+devtools/testdata/layer_c/deterministic_midi_sequences.json
 ```
 
 Automated results should be written to:
 
 ```text
-logs/tests/layer_c_selftest.latest.json
-logs/tests/layer_c_selftest.jsonl
+logs/tests/layer_c_deterministic_midi_selftest.latest.json
+logs/tests/layer_c_deterministic_midi_selftest.jsonl
 ```
 
 ## Contract and Configuration Criteria
@@ -1816,18 +1816,18 @@ logs/tests/layer_c_selftest.jsonl
 1. Validate the default configuration, scale registry, logical tick, user configuration, Conductor, Harmony, note-event, MIDI-lifecycle, reset, and seed contracts against their schemas.
 2. Create deterministic fixture streams with explicit control-to-tick assignment.
 3. Implement `sfs_xorshift32_v1` and module-seed derivation, then verify all reference vectors in Max and Node.
-4. Implement the pure generation-core `step` and full-reset behavior in `sfs.music_engine.core.basic.js`.
-5. Create `sfs.music_engine.user_config.basic.maxpat` with default `SFS_USER_CONFIG` output.
+4. Implement the pure generation-core `step` and full-reset behavior in `sfs.music_engine.core.deterministic_midi.js`.
+5. Create `sfs.music_engine.user_config.deterministic_midi.maxpat` with default `SFS_USER_CONFIG` output.
 6. Add preset save/load for user configuration.
-7. Create `devtools/max/sfs.music_engine.control_source.test.maxpat`.
-8. Create `sfs.music_engine.clock.logical.maxpat` to call the core `step` operation.
-9. Create `sfs.music_engine.conductor.basic.maxpat`.
+7. Create `devtools/max/sfs.music_engine.deterministic_midi.control_source.test.maxpat`.
+8. Create `sfs.music_engine.clock.deterministic_midi.maxpat` to call the core `step` operation.
+9. Create `sfs.music_engine.conductor.deterministic_midi.maxpat`.
 10. Make the Conductor combine `SFS_MUSICAL_CONTROL` and `SFS_USER_CONFIG`.
-11. Create `sfs.music_engine.harmony.basic.maxpat`.
-12. Create `sfs.music_engine.rhythm.basic.maxpat`.
+11. Create `sfs.music_engine.harmony.deterministic_midi.maxpat`.
+12. Create `sfs.music_engine.rhythm.deterministic_midi.maxpat`.
 13. Implement MIDI note ownership, deterministic voice stealing, flush, and panic behavior behind an internal test outlet.
-14. Create `sfs.music_engine.midi_output.basic.maxpat` around the tested lifecycle logic.
-15. Create `sfs.music_engine.mvp.maxpat` to connect all Layer C modules.
+14. Create `sfs.music_engine.midi_output.deterministic_midi.maxpat` around the tested lifecycle logic.
+15. Create `sfs.music_engine.deterministic_midi.maxpat` to connect all Layer C modules.
 16. Verify identical traces across reset-and-replay runs.
 17. Test preset save/load, state changes, density response, and tension response.
 18. Test MIDI lifecycle and raw MIDI outlet output separately from deterministic note-event generation.

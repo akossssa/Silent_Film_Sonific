@@ -23,8 +23,8 @@ var totalMidiNoteOns = 0;
 var waitToken = 0;
 var running = false;
 var startedAt = 0;
-var reportPath = projectPath("logs/tests/layer_abc_integration.latest.json");
-var logPath = projectPath("logs/tests/layer_abc_integration.jsonl");
+var reportPath = projectPath("logs/tests/layer_abc_deterministic_midi_integration.latest.json");
+var logPath = projectPath("logs/tests/layer_abc_deterministic_midi_integration.jsonl");
 
 function start() {
     if (running) {

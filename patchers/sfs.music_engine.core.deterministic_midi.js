@@ -10,8 +10,8 @@ var HARMONY_SCHEMA = "SFS_HARMONY_CONTEXT";
 var NOTE_EVENT_SCHEMA = "SFS_NOTE_EVENT";
 var MIDI_EVENT_SCHEMA = "SFS_MIDI_EVENT";
 var SCALE_REGISTRY_SCHEMA = "SFS_SCALE_REGISTRY";
-var DEFAULT_CONFIG_PATH = "data/music/SFS_USER_CONFIG.default.v0.1.0.json";
-var SCALE_REGISTRY_PATH = "data/music/SFS_SCALE_REGISTRY.v0.1.0.json";
+var DEFAULT_CONFIG_PATH = "data/music/SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json";
+var SCALE_REGISTRY_PATH = "data/music/SFS_SCALE_REGISTRY.deterministic_midi.v0.1.0.json";
 var ZERO_SEED_REPLACEMENT = 0x6D2B79F5;
 var UINT32_SIZE = 4294967296;
 var MVP_STATES = ["calm", "tension", "action", "chaos"];
@@ -2240,7 +2240,7 @@ try {
     core = new MusicEngineCore();
 } catch (startupError) {
     if (typeof post === "function") {
-        post("sfs.music_engine.core.basic: startup error " + startupError + "\n");
+        post("sfs.music_engine.core.deterministic_midi: startup error " + startupError + "\n");
     }
     core = {
         step: function () { return emptyStepResult([makeDiagnostic("error", "startup_error", String(startupError))]); },

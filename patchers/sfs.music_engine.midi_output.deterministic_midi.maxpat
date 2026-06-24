@@ -35,7 +35,7 @@
             { "box": { "id": "obj-1", "maxclass": "comment", "text": "Layer C MIDI Output", "patching_rect": [35.0, 25.0, 220.0, 20.0] } },
             { "box": { "id": "obj-2", "maxclass": "comment", "text": "Outputs SFS_MIDI_EVENT lifecycle dictionaries and raw MIDI 1.0 bytes. Destination routing is owned by the containing patch.", "linecount": 2, "patching_rect": [35.0, 55.0, 700.0, 36.0] } },
             { "box": { "id": "obj-3", "maxclass": "inlet", "comment": "Layer C input / step / panic", "patching_rect": [65.0, 130.0, 30.0, 30.0] } },
-            { "box": { "id": "obj-4", "maxclass": "newobj", "text": "js sfs.music_engine.core.basic.js", "patching_rect": [65.0, 180.0, 260.0, 22.0] } },
+            { "box": { "id": "obj-4", "maxclass": "newobj", "text": "js sfs.music_engine.core.deterministic_midi.js", "patching_rect": [65.0, 180.0, 260.0, 22.0] } },
             { "box": { "id": "obj-5", "maxclass": "outlet", "comment": "SFS_MIDI_EVENT dictionaries", "patching_rect": [65.0, 245.0, 30.0, 30.0] } },
             { "box": { "id": "obj-6", "maxclass": "outlet", "comment": "raw MIDI bytes", "patching_rect": [180.0, 245.0, 30.0, 30.0] } },
             { "box": { "id": "obj-7", "maxclass": "outlet", "comment": "diagnostics", "patching_rect": [295.0, 245.0, 30.0, 30.0] } }

@@ -17,14 +17,14 @@ const {
   validateMidiEvent,
   calculateDissonance,
   canonicalize
-} = require("../patchers/sfs.music_engine.core.basic.js");
+} = require("../patchers/sfs.music_engine.core.deterministic_midi.js");
 
 const root = path.resolve(__dirname, "..");
-const fixturePath = path.join(root, "devtools", "testdata", "layer_c", "music_engine_mvp_sequences.json");
-const defaultConfigPath = path.join(root, "data", "music", "SFS_USER_CONFIG.default.v0.1.0.json");
-const scaleRegistryPath = path.join(root, "data", "music", "SFS_SCALE_REGISTRY.v0.1.0.json");
-const reportPath = path.join(root, "logs", "tests", "layer_c_selftest.latest.json");
-const logPath = path.join(root, "logs", "tests", "layer_c_selftest.jsonl");
+const fixturePath = path.join(root, "devtools", "testdata", "layer_c", "deterministic_midi_sequences.json");
+const defaultConfigPath = path.join(root, "data", "music", "SFS_USER_CONFIG.deterministic_midi.default.v0.1.0.json");
+const scaleRegistryPath = path.join(root, "data", "music", "SFS_SCALE_REGISTRY.deterministic_midi.v0.1.0.json");
+const reportPath = path.join(root, "logs", "tests", "layer_c_deterministic_midi_selftest.latest.json");
+const logPath = path.join(root, "logs", "tests", "layer_c_deterministic_midi_selftest.jsonl");
 
 function main() {
   const started = Date.now();

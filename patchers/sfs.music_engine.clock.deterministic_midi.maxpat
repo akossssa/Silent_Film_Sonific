@@ -35,7 +35,7 @@
             { "box": { "id": "obj-1", "maxclass": "comment", "text": "Layer C Logical Clock", "patching_rect": [35.0, 25.0, 240.0, 20.0] } },
             { "box": { "id": "obj-2", "maxclass": "comment", "text": "Bang or send step to advance exactly one deterministic logical tick.", "patching_rect": [35.0, 55.0, 500.0, 20.0] } },
             { "box": { "id": "obj-3", "maxclass": "inlet", "comment": "bang / step / transport command", "patching_rect": [65.0, 120.0, 30.0, 30.0] } },
-            { "box": { "id": "obj-4", "maxclass": "newobj", "text": "js sfs.music_engine.core.basic.js", "patching_rect": [65.0, 170.0, 260.0, 22.0] } },
+            { "box": { "id": "obj-4", "maxclass": "newobj", "text": "js sfs.music_engine.core.deterministic_midi.js", "patching_rect": [65.0, 170.0, 260.0, 22.0] } },
             { "box": { "id": "obj-5", "maxclass": "outlet", "comment": "Conductor context dictionaries", "patching_rect": [65.0, 235.0, 30.0, 30.0] } },
             { "box": { "id": "obj-6", "maxclass": "outlet", "comment": "diagnostics", "patching_rect": [180.0, 235.0, 30.0, 30.0] } }
         ],
